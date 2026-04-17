@@ -1,0 +1,113 @@
+'use client'
+
+import { useRef, useState, useCallback } from 'react'
+import styles from './XRaySection.module.css'
+
+export default function XRaySection() {
+  const containerRef = useRef<HTMLDivElement>(null)
+  const [cursor, setCursor] = useState({ x: 0, y: 0 })
+  const [isHovering, setIsHovering] = useState(false)
+
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLDivElement>) => {
+    const rect = containerRef.current?.getBoundingClientRect()
+    if (!rect) return
+    setCursor({ x: e.clientX - rect.left, y: e.clientY - rect.top })
+  }, [])
+
+  const handleMouseEnter = useCallback(() => setIsHovering(true), [])
+  const handleMouseLeave = useCallback(() => {
+    setIsHovering(false)
+  }, [])
+
+  const mask = isHovering
+    ? `radial-gradient(circle 150px at ${cursor.x}px ${cursor.y}px, black 0%, black 60%, transparent 100%)`
+    : 'none'
+
+  return (
+    <section className={styles.section}>
+      <div className={styles.inner}>
+        {/* Left: text */}
+        <div className={styles.textSide}>
+          <div className={styles.tagline}>TECNOLOGIA ZILMER</div>
+          <h2 className={styles.headline}>
+            ENGENHARIA<br />
+            <span className={styles.accentWord}>DE PRECISÃO</span>
+          </h2>
+          <p className={styles.subtitle}>
+            Cada transformador é projetado com rigor técnico absoluto.
+            Componentes internos selecionados ao milímetro, testados sob as
+            normas mais exigentes para garantir décadas de operação confiável.
+          </p>
+
+          <div className={styles.statsRow}>
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>40+</span>
+              <span className={styles.statLabel}>anos de experiência</span>
+            </div>
+            <div className={styles.statDivider} />
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>ISO</span>
+              <span className={styles.statLabel}>certificação internacional</span>
+            </div>
+            <div className={styles.statDivider} />
+            <div className={styles.stat}>
+              <span className={styles.statNumber}>100%</span>
+              <span className={styles.statLabel}>testado em fábrica</span>
+            </div>
+          </div>
+        </div>
+
+        {/* Right: xray viewer */}
+        <div className={styles.viewerSide}>
+          <div
+            ref={containerRef}
+            className={`${styles.viewer} ${isHovering ? styles.viewerActive : ''}`}
+            onMouseMove={handleMouseMove}
+            onMouseEnter={handleMouseEnter}
+            onMouseLeave={handleMouseLeave}
+          >
+            {/* External image (base layer) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/xray/tco-interno.jpg"
+              alt="Transformador externo"
+              className={styles.imgBase}
+              draggable={false}
+            />
+
+            {/* Internal image (revealed layer) */}
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img
+              src="/images/xray/tco-externo.jpg"
+              alt="Transformador interno - raio-x"
+              className={styles.imgReveal}
+              style={{ WebkitMaskImage: mask, maskImage: mask }}
+              draggable={false}
+            />
+
+            {/* Reticle overlay — follows cursor */}
+            <div
+              className={`${styles.reticle} ${isHovering ? styles.reticleVisible : ''}`}
+              style={
+                {
+                  '--rx': `${cursor.x}px`,
+                  '--ry': `${cursor.y}px`,
+                } as React.CSSProperties
+              }
+            />
+
+            {/* Corner scan-lines decoration */}
+            <div className={styles.cornerTL} />
+            <div className={styles.cornerTR} />
+            <div className={styles.cornerBL} />
+            <div className={styles.cornerBR} />
+
+            {/* Scan line animation */}
+            <div className={`${styles.scanLine} ${isHovering ? styles.scanLineActive : ''}`} />
+
+          </div>
+        </div>
+      </div>
+    </section>
+  )
+}

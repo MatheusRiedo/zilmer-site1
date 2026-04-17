@@ -2,7 +2,7 @@
 
 import { useState } from 'react'
 import Image from 'next/image'
-import Link from 'next/link'
+import { Link } from '@/i18n/routing'
 import styles from './AreasAtuacao.module.css'
 import areasDataJson from '@/data/areas.json'
 
@@ -101,7 +101,7 @@ export default function AreasAtuacao() {
                   </p>
                   <div style={{ marginTop: '24px' }}>
                     <Link
-                      href={`/areas/${activeSlug}`}
+                      href={`/${activeSlug}`}
                       className={styles.primaryButton}
                     >
                       Ver detalhes da área
@@ -113,16 +113,16 @@ export default function AreasAtuacao() {
               <aside className={styles.categoriesMenu}>
                 <nav className={styles.categoriesNav}>
                   {availableAreas.map(({ slug, data }) => (
-                    <button
+                    <Link
                       key={slug}
-                      type="button"
-                      onClick={() => setActiveSlug(slug)}
+                      href={`/${slug}`}
+                      onMouseEnter={() => setActiveSlug(slug)}
                       className={`${styles.categoryItem} ${
                         slug === activeSlug ? styles.active : ''
                       }`}
                     >
                       <span className={styles.categoryText}>{data.title}</span>
-                    </button>
+                    </Link>
                   ))}
                 </nav>
               </aside>

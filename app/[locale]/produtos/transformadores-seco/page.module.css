@@ -60,7 +60,7 @@
   height: 240px;
   position: relative;
   margin-bottom: 20px;
-  background-color: #f8f9fa;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -135,7 +135,7 @@
   height: 240px;
   position: relative;
   overflow: hidden;
-  background-color: #f8f9fa;
+  background-color: transparent;
   display: flex;
   align-items: center;
   justify-content: center;

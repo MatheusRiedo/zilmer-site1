@@ -310,7 +310,7 @@ export default function AdminSobrePage() {
                   rel="noopener noreferrer"
                   className={styles.previewButton}
                 >
-                  Ver Página
+                  Ver a Página
                 </a>
               </div>
             </>

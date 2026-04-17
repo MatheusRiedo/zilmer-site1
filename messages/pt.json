@@ -7,7 +7,7 @@
   },
   "about": {
     "title": "Sobre a Zilmer",
-    "intro": "A Zilmer Transformadores atua há décadas no mercado de transformadores, oferecendo soluções em transformadores imersos em óleo, a seco e para instrumentos.\n\nNossa experiência e qualidade atendem aos setores de transporte, hidrelétricas, mineração, subestações, energias renováveis e controle e medição.",
+    "intro": "Com mais de 60 anos de atuação, a Zilmer é uma empresa brasileira consolidada no mercado de transformadores. Atendendo grandes clientes com soluções customizadas em projetos para concessionárias de energia, siderúrgicas, setor petrolífero, mineração, sistemas metroviários, indústrias automotivas, subestações de energia e outros. Desenvolvendo soluções especiais, tanto em aplicações principais quanto auxiliares.\n\nDiante da recente expansão do setor energético global e dos novos desafios tecnológicos, sua capacidade técnica e know-how têm sido amplamente demandados no Brasil e na América do Sul. Reconhecida pela confiabilidade de seus equipamentos e suporte técnico qualificado, a empresa é referência em inovação tecnológica, otimização de processos produtivos e no fortalecimento de parcerias com grandes clientes e parceiros internacionais.",
     "cards": {
       "history": {
         "title": "Histórico",
@@ -80,8 +80,8 @@
     }
   },
   "news": {
-    "title": "Projetos recentes",
-    "subtitle": "Alguns dos projetos em que a Zilmer participou.",
+    "title": "Notícias",
+    "subtitle": "Acompanhe as últimas notícias e projetos da Zilmer.",
     "items": {
       "1": {
         "title": "Projeto hidrelétrica",

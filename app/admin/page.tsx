@@ -216,6 +216,10 @@ export default function AdminPage() {
           <a href="/admin/produtos" style={{ color: '#6ba3f0', textDecoration: 'none', fontWeight: 600 }}>
             → Editar páginas de Produtos
           </a>
+          {' | '}
+          <a href="/admin/noticias" style={{ color: '#6ba3f0', textDecoration: 'none', fontWeight: 600 }}>
+            → Editar Notícias
+          </a>
         </div>
       </div>
 
@@ -333,7 +337,7 @@ export default function AdminPage() {
                   rel="noopener noreferrer"
                   className={styles.previewButton}
                 >
-                  Ver Página
+                  Ver a Página
                 </a>
               </div>
             </>

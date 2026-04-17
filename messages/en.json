@@ -80,8 +80,8 @@
     }
   },
   "news": {
-    "title": "Recent projects",
-    "subtitle": "Some of the projects Zilmer has been part of.",
+    "title": "News",
+    "subtitle": "Follow the latest news and projects from Zilmer.",
     "items": {
       "1": {
         "title": "Hydropower project",

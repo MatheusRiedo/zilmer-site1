@@ -6,6 +6,7 @@ export async function GET(request: Request) {
   try {
     const { searchParams } = new URL(request.url)
     const category = searchParams.get('category')
+    const subfolder = searchParams.get('subfolder') || ''
 
     if (!category) {
       return NextResponse.json(
@@ -14,7 +15,6 @@ export async function GET(request: Request) {
       )
     }
 
-    // Mapear categorias para pastas
     const folderMap: { [key: string]: string } = {
       oleo: 'public/images/produtos/oleo',
       seco: 'public/images/produtos/seco',
@@ -29,31 +29,31 @@ export async function GET(request: Request) {
       )
     }
 
+    const searchDir = subfolder ? join(process.cwd(), baseFolder, subfolder) : join(process.cwd(), baseFolder)
     const images: string[] = []
 
-    // Função recursiva para buscar imagens
-    const findImages = (dir: string, basePath: string = '') => {
+    const findImages = (dir: string, relBase: string = '') => {
       try {
         const files = readdirSync(dir)
         files.forEach((file) => {
           const fullPath = join(dir, file)
-          const relativePath = basePath ? `${basePath}/${file}` : file
+          const relPath = relBase ? `${relBase}/${file}` : file
           const stat = statSync(fullPath)
-
           if (stat.isDirectory()) {
-            findImages(fullPath, relativePath)
+            findImages(fullPath, relPath)
           } else if (/\.(jpg|jpeg|png|gif|webp)$/i.test(file)) {
-            // Remover 'public' do caminho para usar no site
-            const imagePath = `/images/produtos/${category}/${relativePath.replace(/\\/g, '/')}`
+            const imagePath = subfolder
+              ? `/images/produtos/${category}/${subfolder}/${relPath.replace(/\\/g, '/')}`
+              : `/images/produtos/${category}/${relPath.replace(/\\/g, '/')}`
             images.push(imagePath)
           }
         })
-      } catch (error) {
-        console.error(`Erro ao ler diretório ${dir}:`, error)
+      } catch {
+        // directory may not exist yet
       }
     }
 
-    findImages(baseFolder)
+    findImages(searchDir)
 
     return NextResponse.json({ images })
   } catch (error) {

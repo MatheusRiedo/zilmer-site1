@@ -41,7 +41,7 @@ export default function XRaySection() {
 
           <div className={styles.statsRow}>
             <div className={styles.stat}>
-              <span className={styles.statNumber}>40+</span>
+              <span className={styles.statNumber}>60+</span>
               <span className={styles.statLabel}>anos de experiência</span>
             </div>
             <div className={styles.statDivider} />

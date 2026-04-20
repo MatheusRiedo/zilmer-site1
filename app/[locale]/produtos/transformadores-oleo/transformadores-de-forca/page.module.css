@@ -42,7 +42,7 @@
   text-align: left;
   cursor: pointer;
   border-radius: 4px;
-  transition: all 0.3s ease;
+  transition: border-color 0.3s ease, background-color 0.3s ease;
   font-size: 0.95rem;
   color: var(--text-dark);
   font-weight: 500;
@@ -51,7 +51,6 @@
 .categoryItem:hover {
   border-color: var(--secondary-color);
   background-color: var(--bg-light);
-  transform: translateX(5px);
 }
 
 .categoryItem.activeCategory {

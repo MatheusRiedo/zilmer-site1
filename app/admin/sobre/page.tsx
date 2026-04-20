@@ -1,21 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import styles from '../page.module.css'
 
-// Importar ReactQuill dinamicamente para evitar problemas de SSR
-const ReactQuill = dynamic(
-  () => import('react-quill'),
-  { 
-    ssr: false,
-    loading: () => (
-      <div style={{ minHeight: '400px', padding: '1rem', border: '2px solid #dee2e6', borderRadius: '4px' }}>
-        <p>Carregando editor...</p>
-      </div>
-    )
-  }
-)
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, '').trim()
+}
 
 interface SobreData {
   principal: {
@@ -52,21 +42,6 @@ export default function AdminSobrePage() {
 
   useEffect(() => {
     loadSobreData()
-    
-    // Carregar CSS do React Quill apenas no cliente
-    if (typeof window !== 'undefined') {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://cdn.quilljs.com/1.3.6/quill.snow.css'
-      document.head.appendChild(link)
-      
-      return () => {
-        const existingLink = document.querySelector('link[href="https://cdn.quilljs.com/1.3.6/quill.snow.css"]')
-        if (existingLink) {
-          existingLink.remove()
-        }
-      }
-    }
   }, [])
 
   const loadSobreData = async () => {
@@ -99,7 +74,7 @@ export default function AdminSobrePage() {
         body: JSON.stringify({
           section: selectedSection,
           field: selectedField,
-          value: editedValue,
+          value: stripHtml(editedValue),
         }),
       })
 
@@ -145,7 +120,7 @@ export default function AdminSobrePage() {
       }
       
       if (typeof target === 'string') {
-        value = target
+        value = stripHtml(target)
       } else {
         value = ''
       }
@@ -268,33 +243,22 @@ export default function AdminSobrePage() {
                 </h2>
               </div>
               <div className={styles.editorWrapper}>
-                {typeof window !== 'undefined' && (
-                  <ReactQuill
-                    theme="snow"
-                    value={editedValue || ''}
-                    onChange={setEditedValue}
-                    placeholder="Digite o texto aqui..."
-                    modules={{
-                      toolbar: [
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'align': [] }],
-                        ['link'],
-                        [{ 'color': [] }, { 'background': [] }],
-                        ['clean']
-                      ],
-                    }}
-                    formats={[
-                      'header',
-                      'bold', 'italic', 'underline', 'strike',
-                      'list', 'bullet',
-                      'align',
-                      'link',
-                      'color', 'background'
-                    ]}
-                  />
-                )}
+                <textarea
+                  value={editedValue || ''}
+                  onChange={(e) => setEditedValue(e.target.value)}
+                  placeholder="Digite o texto aqui..."
+                  style={{
+                    width: '100%',
+                    minHeight: '220px',
+                    padding: '15px',
+                    border: '1px solid #dee2e6',
+                    borderRadius: '4px',
+                    fontFamily: 'inherit',
+                    fontSize: '1rem',
+                    lineHeight: '1.6',
+                    resize: 'vertical',
+                  }}
+                />
               </div>
               <div className={styles.editorActions}>
                 <button

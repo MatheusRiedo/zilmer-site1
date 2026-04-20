@@ -1,7 +1,6 @@
 'use client'
 
 import { useState } from 'react'
-import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import styles from './AreasAtuacao.module.css'
 import areasDataJson from '@/data/areas.json'
@@ -46,11 +45,9 @@ export default function AreasAtuacao() {
     .map((slug) => ({ slug, data: areasData[slug] }))
     .filter((item) => !!item.data)
 
-  if (availableAreas.length === 0) {
-    return null
-  }
+  const [activeSlug, setActiveSlug] = useState<string>(orderedSlugs[0])
 
-  const [activeSlug, setActiveSlug] = useState<string>(availableAreas[0].slug)
+  if (availableAreas.length === 0) return null
 
   const activeArea =
     availableAreas.find((item) => item.slug === activeSlug)?.data ??
@@ -66,71 +63,63 @@ export default function AreasAtuacao() {
     <section className={styles.areasSection}>
       <div className={styles.areasContainer}>
         <div className={styles.backgroundImageWrapper}>
-          <Image
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
             src={heroImage}
             alt={activeArea.title}
-            fill
             className={styles.backgroundImage}
-            priority
           />
           <div className={styles.imageOverlay} />
         </div>
 
         <div className={styles.contentWrapper}>
           <div className="container">
-            <div className={styles.heroContent}>
-              <h1 className={styles.heroTitle}>{activeArea.title}</h1>
-              <p className={styles.heroDescription}>{heroDescription}</p>
-            </div>
 
-            <div className={styles.contentGrid}>
-              <div className={styles.projectsContent}>
-                <h2 className={styles.sectionTitle}>Áreas de atuação</h2>
-                <div className={styles.projectInfo}>
-                  <h3 className={styles.projectTitle}>
-                    {activeArea.solucao.title}
-                  </h3>
-                  <p className={styles.projectDescription}>
-                    {activeArea.solucao.problem}
-                  </p>
-                  <p className={styles.projectDescription}>
-                    {activeArea.solucao.melhora}
-                  </p>
-                  <p className={styles.projectDescription}>
-                    {activeArea.solucao.essencial}
-                  </p>
-                  <div style={{ marginTop: '24px' }}>
-                    <Link
-                      href={`/${activeSlug}`}
-                      className={styles.primaryButton}
-                    >
-                      Ver detalhes da área
-                    </Link>
-                  </div>
+            {/* ── Section header (static) ── */}
+            <header className={styles.sectionHeader}>
+              <span className={styles.eyebrow}>Segmentos de Mercado</span>
+              <h2 className={styles.sectionHeading}>Áreas de Atuação</h2>
+              <p className={styles.sectionSubtitle}>
+                Transformadores de alta performance para os principais setores da indústria
+              </p>
+              <div className={styles.headerDivider} />
+            </header>
+
+            {/* ── Area tabs ── */}
+            <nav className={styles.tabsNav} aria-label="Áreas de atuação">
+              {availableAreas.map(({ slug, data }) => (
+                <button
+                  key={slug}
+                  onMouseEnter={() => setActiveSlug(slug)}
+                  onClick={() => setActiveSlug(slug)}
+                  className={`${styles.tab} ${slug === activeSlug ? styles.tabActive : ''}`}
+                >
+                  {data.title}
+                </button>
+              ))}
+            </nav>
+
+            {/* ── Active area content ── */}
+            <div className={styles.areaContent}>
+              <div className={styles.areaMain}>
+                <h3 className={styles.areaTitle}>{activeArea.title}</h3>
+                <p className={styles.areaDescription}>{heroDescription}</p>
+
+                <div className={styles.solutionBlock}>
+                  <p>{activeArea.solucao.problem}</p>
+                  <p>{activeArea.solucao.melhora}</p>
+                  <p>{activeArea.solucao.essencial}</p>
                 </div>
-              </div>
 
-              <aside className={styles.categoriesMenu}>
-                <nav className={styles.categoriesNav}>
-                  {availableAreas.map(({ slug, data }) => (
-                    <Link
-                      key={slug}
-                      href={`/${slug}`}
-                      onMouseEnter={() => setActiveSlug(slug)}
-                      className={`${styles.categoryItem} ${
-                        slug === activeSlug ? styles.active : ''
-                      }`}
-                    >
-                      <span className={styles.categoryText}>{data.title}</span>
-                    </Link>
-                  ))}
-                </nav>
-              </aside>
+                <Link href={`/${activeSlug}`} className={styles.primaryButton}>
+                  Ver detalhes da área
+                </Link>
+              </div>
             </div>
+
           </div>
         </div>
       </div>
     </section>
   )
 }
-

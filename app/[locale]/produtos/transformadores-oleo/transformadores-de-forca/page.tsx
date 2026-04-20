@@ -14,6 +14,7 @@ export default function TransformadoresDeForcaPage() {
     specifications: string[]
     images: string[]
     captions: { [key: string]: string }
+    firstImageIndex?: number
   }>>([])
   const [selectedCategory, setSelectedCategory] = useState<{
     id: string
@@ -45,7 +46,9 @@ export default function TransformadoresDeForcaPage() {
               title: categoria.title,
               description: categoria.description,
               specifications: categoria.specifications || [],
-              images: categoria.images || [],
+              images: categoria.images?.length
+                ? categoria.images
+                : categoria.image ? [categoria.image] : [],
               captions: categoria.captions || {},
               firstImageIndex:
                 categoria.firstImageIndex !== undefined
@@ -72,7 +75,9 @@ export default function TransformadoresDeForcaPage() {
               title: categoria.title,
               description: categoria.description,
               specifications: categoria.specifications || [],
-              images: categoria.images || [],
+              images: categoria.images?.length
+                ? categoria.images
+                : categoria.image ? [categoria.image] : [],
               captions: categoria.captions || {},
               firstImageIndex:
                 categoria.firstImageIndex !== undefined

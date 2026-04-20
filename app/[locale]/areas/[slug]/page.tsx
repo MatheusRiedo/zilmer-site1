@@ -34,19 +34,21 @@ const areasData = areasDataJson as {
   }
 }
 
-// Helper para renderizar texto com ou sem HTML
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, '').trim()
+}
+
 function renderText(text: string | undefined | null) {
-  if (!text) return <p></p>
-  
-  // Verifica se o texto contém tags HTML
-  const hasHTML = /<[^>]+>/.test(text)
-  
-  if (hasHTML) {
-    return <div dangerouslySetInnerHTML={{ __html: text }} />
-  }
-  
-  // Se não tem HTML, renderiza como texto simples
-  return <p>{text}</p>
+  if (!text) return null
+  const plain = stripHtml(text)
+  if (!plain) return null
+  return (
+    <>
+      {plain.split('\n\n').filter(p => p.trim()).map((p, i) => (
+        <p key={i}>{p.trim()}</p>
+      ))}
+    </>
+  )
 }
 
 // Lista ordenada das áreas para navegação

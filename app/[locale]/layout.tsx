@@ -55,7 +55,7 @@ export default async function LocaleLayout({
       <body className={inter.className}>
         <NextIntlClientProvider messages={messages}>
           <Header />
-          <main style={{ minHeight: '100vh' }}>{children}</main>
+          <main style={{ minHeight: '100vh', paddingTop: '76px' }}>{children}</main>
           <Footer />
         </NextIntlClientProvider>
       </body>

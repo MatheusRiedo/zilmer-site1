@@ -99,7 +99,8 @@
             "Isolação: Óleo mineral",
             "Níveis de proteção: IP00"
           ],
-          "image": "/images/produtos/oleo/transformadores-de-forca/30-a-300-kv/1776439853009__2__TCO_-_UNIPAR_-_10000_kVA.png"
+          "image": "/images/produtos/oleo/transformadores-de-forca/30-a-300-kv/1776704424351__2__TAO_-_HITACHI_-_300_kVA_-_Perspectiva_2.png",
+          "cardImage": ""
         },
         "500-3000": {
           "title": "500 a 3000 kVA",
@@ -110,7 +111,8 @@
             "Sistema de resfriamento: ONAN/ONAF",
             "Isolação: Óleo mineral",
             "Níveis de proteção: IP00"
-          ]
+          ],
+          "image": "/images/produtos/oleo/transformadores-de-forca/500-a-3000-kv/1770401019265_TCO_-_PETROBRAS_-_3500_kVA.png"
         },
         "3-20": {
           "title": "3 MVA até 20 MVA",
@@ -122,7 +124,8 @@
             "Isolação: Óleo mineral",
             "Níveis de proteção: IP00"
           ],
-          "cardImage": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.png"
+          "cardImage": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.png",
+          "image": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.png"
         }
       },
       "cardImage": "/images/produtos/oleo/transformadores-de-forca/500-a-3000-kv/1770401019265_TCO_-_PETROBRAS_-_3500_kVA.png"
@@ -149,7 +152,7 @@
       },
       "para-retificadores": {
         "title": "TRANSFORMADORES A SECO PARA RETIFICADORES EM RESINA EPÓXI",
-        "longDescription": "<p>Os transformadores a seco Zilmer para sistemas retificadores são projetados para atender aos rigorosos requisitos de circuitos semicondutores de 6 a 24 pulsos, onde a estabilidade da corrente contínua é primordial. Utilizando tecnologia de isolação em resina epóxi de alta rigidez dielétrica, o equipamento oferece uma solução compacta, segura contra incêndios e com elevada resistência mecânica para suportar os esforços eletrodinâmicos típicos de cargas não lineares. Disponíveis nas classes térmicas F (155°C) ou H (180°C), esses transformadores garantem excelente gestão do calor e durabilidade sob regimes de harmônicos elevados, aliando alto desempenho técnico a uma operação de baixa necessidade de manutenção para aplicações industriais críticas.</p>",
+        "longDescription": "Os transformadores a seco Zilmer para sistemas retificadores são projetados para atender aos rigorosos requisitos de circuitos semicondutores de 6 a 24 pulsos, onde a estabilidade da corrente contínua é primordial. Utilizando tecnologia de isolação em resina epóxi de alta rigidez dielétrica, o equipamento oferece uma solução compacta, segura contra incêndios e com elevada resistência mecânica para suportar os esforços eletrodinâmicos típicos de cargas não lineares. Disponíveis nas classes térmicas F (155°C) ou H (180°C), esses transformadores garantem excelente gestão do calor e durabilidade sob regimes de harmônicos elevados, aliando alto desempenho técnico a uma operação de baixa necessidade de manutenção para aplicações industriais críticas.",
         "image": "/images/produtos/seco/retificadores/TAM - SIEMENS - 4700 kVA v1.png",
         "images": [
           "/images/produtos/seco/retificadores/TAM - SIEMENS - 4700 kVA v1.png"
@@ -185,7 +188,7 @@
       },
       "reatores-de-partida": {
         "title": "REATORES DE PARTIDA MOLDADOS EM RESINA EPÓXI",
-        "longDescription": "[Descrição a ser adicionada]",
+        "longDescription": "O reator de partida é um componente eletromagnético indispensável para o acionamento eficiente de motores de indução, atuando diretamente na mitigação da corrente de Inrush — o pico de corrente que ocorre no instante da partida. Ao aplicar uma impedância em série com o motor, o equipamento modula a tensão fornecida, garantindo que o torque inicial seja suficiente para o arranque sem expor o sistema a picos de energia prejudiciais. Essa regulação precisa é o que preserva a integridade dos enrolamentos e componentes internos do motor, evitando o estresse térmico e mecânico que frequentemente leva a falhas prematuras e paradas não programadas na linha de produção.\n\nA robustez de um reator de alta performance é medida por sua capacidade de suportar transientes e oscilações na rede elétrica, mantendo a estabilidade operacional mesmo em cenários de alta demanda. No desenvolvimento dos produtos Zilmer, a escolha de matérias-primas com alta permeabilidade magnética e processos de fabricação rigorosos assegura que cada unidade entregue máxima linearidade e eficiência.",
         "image": "/images/produtos/seco/reatores-de-partida/1770401826163__2__RPM_-_DISTRITO_DE_IRRIG_-_1700_HP.png",
         "images": [
           "/images/produtos/seco/reatores-de-partida/1770401826163__2__RPM_-_DISTRITO_DE_IRRIG_-_1700_HP.png"

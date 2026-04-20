@@ -1,21 +1,11 @@
 'use client'
 
 import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
 import styles from './page.module.css'
 
-// Importar ReactQuill dinamicamente para evitar problemas de SSR
-const ReactQuill = dynamic(
-  () => import('react-quill'),
-  { 
-    ssr: false,
-    loading: () => (
-      <div style={{ minHeight: '400px', padding: '1rem', border: '2px solid #dee2e6', borderRadius: '4px' }}>
-        <p>Carregando editor...</p>
-      </div>
-    )
-  }
-)
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, '').trim()
+}
 
 interface AreaData {
   title: string
@@ -55,22 +45,6 @@ export default function AdminPage() {
 
   useEffect(() => {
     loadAreasData()
-    
-    // Carregar CSS do React Quill apenas no cliente
-    if (typeof window !== 'undefined') {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://cdn.quilljs.com/1.3.6/quill.snow.css'
-      document.head.appendChild(link)
-      
-      return () => {
-        // Limpar ao desmontar
-        const existingLink = document.querySelector('link[href="https://cdn.quilljs.com/1.3.6/quill.snow.css"]')
-        if (existingLink) {
-          existingLink.remove()
-        }
-      }
-    }
   }, [])
 
   const loadAreasData = async () => {
@@ -95,19 +69,10 @@ export default function AdminPage() {
     setMessage(null)
 
     try {
-      let valueToSave: string | string[] = editedValue
-      
-      // Se for legendas, remover tags HTML e limpar o texto
-      if (selectedField === 'aplicacao.imageCaption' || selectedField === 'aplicacao.imageCaptions') {
-        // Remover tags HTML se existirem
-        let cleanValue = editedValue.replace(/<[^>]*>/g, '').trim()
-        
-        // Se for imageCaptions, converter string com quebras de linha para array
-        if (selectedField === 'aplicacao.imageCaptions') {
-          valueToSave = cleanValue.split('\n').filter((line: string) => line.trim() !== '')
-        } else {
-          valueToSave = cleanValue
-        }
+      let valueToSave: string | string[] = stripHtml(editedValue)
+
+      if (selectedField === 'aplicacao.imageCaptions') {
+        valueToSave = stripHtml(editedValue).split('\n').filter((line: string) => line.trim() !== '')
       }
 
       const response = await fetch('/api/admin/areas', {
@@ -148,11 +113,11 @@ export default function AdminPage() {
       let value = ''
       
       if (field === 'aplicacao.description') {
-        value = area.aplicacao.description
+        value = stripHtml(area.aplicacao.description)
       } else if (field === 'aplicacao.title') {
-        value = area.aplicacao.title
+        value = stripHtml(area.aplicacao.title)
       } else if (field === 'aplicacao.heroDescription') {
-        value = area.aplicacao.heroDescription
+        value = stripHtml(area.aplicacao.heroDescription)
       } else if (field === 'aplicacao.imageCaption') {
         value = (area.aplicacao as any).imageCaption || ''
       } else if (field === 'aplicacao.imageCaptions') {
@@ -275,53 +240,24 @@ export default function AdminPage() {
                 </h2>
               </div>
               <div className={styles.editorWrapper}>
-                {selectedField === 'aplicacao.imageCaptions' || selectedField === 'aplicacao.imageCaption' ? (
-                  // Editor de texto simples para legendas (sem HTML)
-                  <textarea
-                    value={editedValue || ''}
-                    onChange={(e) => setEditedValue(e.target.value)}
-                    placeholder={selectedField === 'aplicacao.imageCaptions' 
-                      ? "Digite uma legenda por linha. Cada linha será uma legenda para cada imagem na ordem."
-                      : "Digite a legenda da imagem (texto simples, sem formatação)"}
-                    style={{
-                      width: '100%',
-                      minHeight: selectedField === 'aplicacao.imageCaptions' ? '300px' : '100px',
-                      padding: '15px',
-                      border: '1px solid #dee2e6',
-                      borderRadius: '4px',
-                      fontFamily: 'inherit',
-                      fontSize: '1rem',
-                      lineHeight: '1.6',
-                      resize: 'vertical'
-                    }}
-                  />
-                ) : typeof window !== 'undefined' ? (
-                  <ReactQuill
-                    theme="snow"
-                    value={editedValue || ''}
-                    onChange={setEditedValue}
-                    placeholder="Digite o texto aqui..."
-                    modules={{
-                      toolbar: [
-                        [{ 'header': [1, 2, 3, false] }],
-                        ['bold', 'italic', 'underline', 'strike'],
-                        [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-                        [{ 'align': [] }],
-                        ['link'],
-                        [{ 'color': [] }, { 'background': [] }],
-                        ['clean']
-                      ],
-                    }}
-                    formats={[
-                      'header',
-                      'bold', 'italic', 'underline', 'strike',
-                      'list', 'bullet',
-                      'align',
-                      'link',
-                      'color', 'background'
-                    ]}
-                  />
-                ) : null}
+                <textarea
+                  value={editedValue || ''}
+                  onChange={(e) => setEditedValue(e.target.value)}
+                  placeholder={selectedField === 'aplicacao.imageCaptions'
+                    ? 'Digite uma legenda por linha.'
+                    : 'Digite o texto aqui...'}
+                  style={{
+                    width: '100%',
+                    minHeight: '220px',
+                    padding: '15px',
+                    border: '1px solid #dee2e6',
+                    borderRadius: '4px',
+                    fontFamily: 'inherit',
+                    fontSize: '1rem',
+                    lineHeight: '1.6',
+                    resize: 'vertical',
+                  }}
+                />
               </div>
               <div className={styles.editorActions}>
                 <button

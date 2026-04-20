@@ -1,23 +1,14 @@
 'use client'
 
 import { useState, useEffect, useRef } from 'react'
-import dynamic from 'next/dynamic'
 import Image from 'next/image'
 import styles from '../page.module.css'
 import imageStyles from './imageManager.module.css'
 import CarouselEditor from './CarouselEditor'
 
-const ReactQuill = dynamic(
-  () => import('react-quill'),
-  {
-    ssr: false,
-    loading: () => (
-      <div style={{ minHeight: '400px', padding: '1rem', border: '2px solid #dee2e6', borderRadius: '4px' }}>
-        <p>Carregando editor...</p>
-      </div>
-    )
-  }
-)
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, '').trim()
+}
 
 type FieldEntry = {
   label: string
@@ -114,15 +105,12 @@ const FIELDS: Record<string, FieldGroup[]> = {
         { label: '30–500 kVA — Título', path: 'transformadores-de-forca.categorias.30-500.title' },
         { label: '30–500 kVA — Descrição', path: 'transformadores-de-forca.categorias.30-500.description' },
         { label: '30–500 kVA — Imagem', path: 'transformadores-de-forca.categorias.30-500.image', type: 'image', subfolder: 'transformadores-de-forca/30-a-300-kv' },
-        { label: '30–500 kVA — Imagem do Card', path: 'transformadores-de-forca.categorias.30-500.cardImage', type: 'image', subfolder: 'transformadores-de-forca/30-a-300-kv' },
         { label: '500–3000 kVA — Título', path: 'transformadores-de-forca.categorias.500-3000.title' },
         { label: '500–3000 kVA — Descrição', path: 'transformadores-de-forca.categorias.500-3000.description' },
         { label: '500–3000 kVA — Imagem', path: 'transformadores-de-forca.categorias.500-3000.image', type: 'image', subfolder: 'transformadores-de-forca/500-a-3000-kv' },
-        { label: '500–3000 kVA — Imagem do Card', path: 'transformadores-de-forca.categorias.500-3000.cardImage', type: 'image', subfolder: 'transformadores-de-forca/500-a-3000-kv' },
         { label: '3–20 MVA — Título', path: 'transformadores-de-forca.categorias.3-20.title' },
         { label: '3–20 MVA — Descrição', path: 'transformadores-de-forca.categorias.3-20.description' },
         { label: '3–20 MVA — Imagem', path: 'transformadores-de-forca.categorias.3-20.image', type: 'image', subfolder: 'transformadores-de-forca/3mva-a-20mva' },
-        { label: '3–20 MVA — Imagem do Card', path: 'transformadores-de-forca.categorias.3-20.cardImage', type: 'image', subfolder: 'transformadores-de-forca/3mva-a-20mva' },
       ],
     },
   ],
@@ -266,15 +254,6 @@ export default function AdminProdutosPage() {
 
   useEffect(() => {
     loadData()
-    if (typeof window !== 'undefined') {
-      const link = document.createElement('link')
-      link.rel = 'stylesheet'
-      link.href = 'https://cdn.quilljs.com/1.3.6/quill.snow.css'
-      document.head.appendChild(link)
-      return () => {
-        document.querySelector('link[href="https://cdn.quilljs.com/1.3.6/quill.snow.css"]')?.remove()
-      }
-    }
   }, [])
 
   const loadData = async () => {
@@ -303,7 +282,7 @@ export default function AdminProdutosPage() {
     setExistingImages([])
 
     if (entry.type !== 'carousel' && produtosData) {
-      setEditedValue(getValueByPath(produtosData[selectedCategoria], entry.path))
+      setEditedValue(stripHtml(getValueByPath(produtosData[selectedCategoria], entry.path)))
       if (entry.type === 'image' && entry.subfolder) {
         loadExistingImages(selectedCategoria, entry.subfolder)
       }
@@ -328,7 +307,7 @@ export default function AdminProdutosPage() {
       const res = await fetch('/api/admin/produtos', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ categoria: selectedCategoria, path: selectedEntry.path, value: editedValue }),
+        body: JSON.stringify({ categoria: selectedCategoria, path: selectedEntry.path, value: stripHtml(editedValue) }),
       })
       if (res.ok) {
         setProdutosData(await res.json())
@@ -585,26 +564,22 @@ export default function AdminProdutosPage() {
               {!isImage && !isCarousel && (
                 <>
                   <div className={styles.editorWrapper}>
-                    {typeof window !== 'undefined' && (
-                      <ReactQuill
-                        theme="snow"
-                        value={editedValue || ''}
-                        onChange={setEditedValue}
-                        placeholder="Digite o texto aqui..."
-                        modules={{
-                          toolbar: [
-                            [{ header: [1, 2, 3, false] }],
-                            ['bold', 'italic', 'underline', 'strike'],
-                            [{ list: 'ordered' }, { list: 'bullet' }],
-                            [{ align: [] }],
-                            ['link'],
-                            [{ color: [] }, { background: [] }],
-                            ['clean'],
-                          ],
-                        }}
-                        formats={['header', 'bold', 'italic', 'underline', 'strike', 'list', 'bullet', 'align', 'link', 'color', 'background']}
-                      />
-                    )}
+                    <textarea
+                      value={editedValue || ''}
+                      onChange={(e) => setEditedValue(e.target.value)}
+                      placeholder="Digite o texto aqui..."
+                      style={{
+                        width: '100%',
+                        minHeight: '220px',
+                        padding: '15px',
+                        border: '1px solid #dee2e6',
+                        borderRadius: '4px',
+                        fontFamily: 'inherit',
+                        fontSize: '1rem',
+                        lineHeight: '1.6',
+                        resize: 'vertical',
+                      }}
+                    />
                   </div>
                   <div className={styles.editorActions}>
                     <button className={styles.saveButton} onClick={handleTextSave} disabled={loading}>

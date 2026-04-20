@@ -10,23 +10,18 @@ const sobreData = sobreDataJson as {
   }
 }
 
-// Helper para renderizar texto com ou sem HTML
+function stripHtml(text: string): string {
+  return text.replace(/<[^>]*>/g, '').trim()
+}
+
 function renderText(text: string | undefined | null) {
-  if (!text) return <p></p>
-  
-  const hasHTML = /<[^>]+>/.test(text)
-  
-  if (hasHTML) {
-    return <div dangerouslySetInnerHTML={{ __html: text }} />
-  }
-  
-  // Se não tem HTML, dividir por quebras de linha duplas e renderizar como parágrafos
-  const paragraphs = text.split('\n\n').filter(p => p.trim())
-  
+  if (!text) return null
+  const plain = stripHtml(text)
+  if (!plain) return null
   return (
     <>
-      {paragraphs.map((paragraph, index) => (
-        <p key={index}>{paragraph.trim()}</p>
+      {plain.split('\n\n').filter(p => p.trim()).map((p, i) => (
+        <p key={i}>{p.trim()}</p>
       ))}
     </>
   )

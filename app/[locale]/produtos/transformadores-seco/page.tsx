@@ -4,16 +4,18 @@ import styles from './page.module.css'
 import { unstable_noStore as noStore } from 'next/cache'
 import { readFileSync } from 'fs'
 import { join } from 'path'
+import { getLocale } from 'next-intl/server'
 
 // Forçar atualização dinâmica para sempre buscar dados atualizados
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
 // Função para ler o JSON diretamente do arquivo (sem cache)
-function getProdutosData() {
+function getProdutosData(locale: string) {
   noStore()
   try {
-    const filePath = join(process.cwd(), 'data', 'produtos.json')
+    const fileName = locale === 'en' ? 'produtos.en.json' : 'produtos.json'
+    const filePath = join(process.cwd(), 'data', fileName)
     const fileContents = readFileSync(filePath, 'utf8')
     return JSON.parse(fileContents)
   } catch (error) {
@@ -22,10 +24,11 @@ function getProdutosData() {
   }
 }
 
-export default function TransformadoresSecoPage() {
-  // Desabilitar cache e ler JSON diretamente do arquivo
+export default async function TransformadoresSecoPage() {
   noStore()
-  const produtosData = getProdutosData()
+  const locale = await getLocale()
+  const isEn = locale === 'en'
+  const produtosData = getProdutosData(locale)
   const produtos = produtosData.seco?.produtos || {}
   
   // Mapear produtos para seus slugs e imagens padrão
@@ -59,12 +62,12 @@ export default function TransformadoresSecoPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <h1>Transformadores a Seco</h1>
+        <h1>{isEn ? 'Dry-Type Transformers' : 'Transformadores a Seco'}</h1>
         <div className={styles.content}>
           <div className={styles.intro}>
             <p>
-              {getProdutosData().seco?.intro?.description || 
-                'Transformadores a seco moldados em resina epóxi são a solução ideal para aplicações que exigem segurança, baixa manutenção e instalação em ambientes internos. Nossos transformadores oferecem alta confiabilidade e desempenho superior em diversas aplicações industriais.'}
+              {getProdutosData(locale).seco?.intro?.description ||
+                (isEn ? 'Epoxy resin cast dry-type transformers are the ideal solution for applications requiring safety, low maintenance and indoor installation. Our transformers offer high reliability and superior performance across diverse industrial applications.' : 'Transformadores a seco moldados em resina epóxi são a solução ideal para aplicações que exigem segurança, baixa manutenção e instalação em ambientes internos. Nossos transformadores oferecem alta confiabilidade e desempenho superior em diversas aplicações industriais.')}
             </p>
           </div>
 
@@ -89,8 +92,8 @@ export default function TransformadoresSecoPage() {
                   </div>
                 ) : null
               })()}
-              <h3>Transformadores de Média Tensão</h3>
-              <p>15 a 36 kV até 20 MVA</p>
+              <h3>{isEn ? 'Medium-Voltage Transformers' : 'Transformadores de Média Tensão'}</h3>
+              <p>15{isEn ? ' to' : ' a'} 36 kV {isEn ? 'up to' : 'até'} 20 MVA</p>
             </Link>
           </div>
 

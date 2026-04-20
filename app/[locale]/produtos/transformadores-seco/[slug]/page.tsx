@@ -2,8 +2,10 @@ import { notFound } from 'next/navigation'
 import ImageGallery from '@/components/ImageGallery'
 import ContactButton from '@/components/ContactButton'
 import styles from './detail.module.css'
-import produtosData from '@/data/produtos.json'
+import produtosDataPt from '@/data/produtos.json'
+import produtosDataEn from '@/data/produtos.en.json'
 import { unstable_noStore as noStore } from 'next/cache'
+import { getLocale } from 'next-intl/server'
 
 // Forçar atualização dinâmica para sempre buscar dados atualizados
 export const dynamic = 'force-dynamic'
@@ -11,8 +13,10 @@ export const revalidate = 0
 
 export default async function ProductDetail({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  // Desabilitar cache para garantir dados sempre atualizados
   noStore()
+  const locale = await getLocale()
+  const produtosData = locale === 'en' ? produtosDataEn : produtosDataPt
+  const isEn = locale === 'en'
   // Mapear slugs para chaves do JSON
   const slugToKey: { [key: string]: string } = {
     'media-tensao': 'media-tensao',
@@ -60,7 +64,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
           <div className={styles.infoSection}>
             {produto.longDescription && (
               <div className={styles.description}>
-                <h2>Descrição</h2>
+                <h2>{isEn ? 'Description' : 'Descrição'}</h2>
                 <p>{produto.longDescription}</p>
               </div>
             )}
@@ -74,9 +78,9 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
                 <div className={styles.pdfCard}>
                   <div className={styles.pdfIcon}>📄</div>
                   <div className={styles.pdfInfo}>
-                    <h3 className={styles.pdfTitle}>Catálogo TAI e TCI</h3>
+                    <h3 className={styles.pdfTitle}>{isEn ? 'TAI and TCI Catalogue' : 'Catálogo TAI e TCI'}</h3>
                     <p className={styles.pdfDescription}>
-                      Especificações técnicas e Desenho Dimensional Orientativo
+                      {isEn ? 'Technical specifications and Indicative Dimensional Drawing' : 'Especificações técnicas e Desenho Dimensional Orientativo'}
                     </p>
                   </div>
                   <a

@@ -3,6 +3,7 @@ import { readFile, writeFile } from 'fs/promises'
 import { join } from 'path'
 
 const NOTICIAS_PATH = join(process.cwd(), 'data', 'noticias.json')
+const NOTICIAS_EN_PATH = join(process.cwd(), 'data', 'noticias.en.json')
 
 function stripHtml(value: unknown): unknown {
   if (typeof value === 'string') {
@@ -11,14 +12,17 @@ function stripHtml(value: unknown): unknown {
   return value
 }
 
-async function loadNoticias() {
-  const file = await readFile(NOTICIAS_PATH, 'utf-8')
+async function loadNoticias(locale?: string) {
+  const filePath = locale === 'en' ? NOTICIAS_EN_PATH : NOTICIAS_PATH
+  const file = await readFile(filePath, 'utf-8')
   return JSON.parse(file)
 }
 
-export async function GET() {
+export async function GET(request: NextRequest) {
   try {
-    const data = await loadNoticias()
+    const { searchParams } = new URL(request.url)
+    const locale = searchParams.get('locale') || 'pt'
+    const data = await loadNoticias(locale)
     return NextResponse.json(data)
   } catch (error) {
     console.error('Erro ao carregar noticias.json:', error)
@@ -39,7 +43,7 @@ export async function POST(request: NextRequest) {
       index?: number
     }
 
-    const data = await loadNoticias()
+    const data = await loadNoticias()  // POST always writes to PT (primary) file
 
     if (action === 'addItem') {
       const newId = String(Date.now())

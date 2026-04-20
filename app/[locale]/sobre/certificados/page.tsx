@@ -1,7 +1,10 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 // @ts-ignore
-import sobreDataJson from '@/data/sobre.json'
+import sobreDataPt from '@/data/sobre.json'
+// @ts-ignore
+import sobreDataEn from '@/data/sobre.en.json'
+import { getLocale } from 'next-intl/server'
 
 // Adicione aqui os nomes dos arquivos de imagens dos certificados
 // Coloque as imagens na pasta: public/images/certificados/
@@ -24,12 +27,6 @@ const certificados = [
   },
 ]
 
-const sobreData = sobreDataJson as {
-  certificados: {
-    title: string
-    description: string
-  }
-}
 
 // Helper para renderizar texto com ou sem HTML
 function renderText(text: string | undefined | null) {
@@ -44,7 +41,12 @@ function renderText(text: string | undefined | null) {
   return <p>{text}</p>
 }
 
-export default function CertificadosPage() {
+export default async function CertificadosPage() {
+  const locale = await getLocale()
+  const sobreData = (locale === 'en' ? sobreDataEn : sobreDataPt) as {
+    certificados: { title: string; description: string }
+  }
+  const openPdfLabel = locale === 'en' ? 'Open PDF' : 'Abrir PDF'
   return (
     <section className={styles.page}>
       <div className="container">
@@ -69,7 +71,7 @@ export default function CertificadosPage() {
                         rel="noopener noreferrer"
                         className={styles.pdfLink}
                       >
-                        {certificado.title} (Abrir PDF)
+                        {certificado.title} ({openPdfLabel})
                       </a>
                     </div>
                   ) : (

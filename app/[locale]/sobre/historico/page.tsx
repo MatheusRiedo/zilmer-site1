@@ -1,14 +1,9 @@
 import styles from './page.module.css'
 // @ts-ignore
-import sobreDataJson from '@/data/sobre.json'
-
-const sobreData = sobreDataJson as {
-  historico: {
-    title: string
-    subtitle: string
-    content: string
-  }
-}
+import sobreDataPt from '@/data/sobre.json'
+// @ts-ignore
+import sobreDataEn from '@/data/sobre.en.json'
+import { getLocale } from 'next-intl/server'
 
 function stripHtml(text: string): string {
   return text.replace(/<[^>]*>/g, '').trim()
@@ -27,7 +22,11 @@ function renderText(text: string | undefined | null) {
   )
 }
 
-export default function HistoricoPage() {
+export default async function HistoricoPage() {
+  const locale = await getLocale()
+  const sobreData = (locale === 'en' ? sobreDataEn : sobreDataPt) as {
+    historico: { title: string; subtitle: string; content: string }
+  }
   return (
     <section className={styles.page}>
       <div className="container">

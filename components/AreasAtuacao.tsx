@@ -3,7 +3,9 @@
 import { useState } from 'react'
 import { Link } from '@/i18n/routing'
 import styles from './AreasAtuacao.module.css'
-import areasDataJson from '@/data/areas.json'
+import areasDataPtJson from '@/data/areas.json'
+import areasDataEnJson from '@/data/areas.en.json'
+import { useLocale } from 'next-intl'
 
 type AreasData = {
   [key: string]: {
@@ -24,8 +26,6 @@ type AreasData = {
   }
 }
 
-const areasData = areasDataJson as AreasData
-
 const orderedSlugs = [
   'transporte',
   'hidreletrica',
@@ -41,6 +41,9 @@ function stripHtml(text: string | undefined): string {
 }
 
 export default function AreasAtuacao() {
+  const locale = useLocale()
+  const isEn = locale === 'en'
+  const areasData = (isEn ? areasDataEnJson : areasDataPtJson) as AreasData
   const availableAreas = orderedSlugs
     .map((slug) => ({ slug, data: areasData[slug] }))
     .filter((item) => !!item.data)
@@ -77,10 +80,10 @@ export default function AreasAtuacao() {
 
             {/* ── Section header (static) ── */}
             <header className={styles.sectionHeader}>
-              <span className={styles.eyebrow}>Segmentos de Mercado</span>
-              <h2 className={styles.sectionHeading}>Áreas de Atuação</h2>
+              <span className={styles.eyebrow}>{isEn ? 'Market Segments' : 'Segmentos de Mercado'}</span>
+              <h2 className={styles.sectionHeading}>{isEn ? 'Areas of Application' : 'Áreas de Atuação'}</h2>
               <p className={styles.sectionSubtitle}>
-                Transformadores de alta performance para os principais setores da indústria
+                {isEn ? 'High-performance transformers for the main industrial sectors' : 'Transformadores de alta performance para os principais setores da indústria'}
               </p>
               <div className={styles.headerDivider} />
             </header>
@@ -112,7 +115,7 @@ export default function AreasAtuacao() {
                 </div>
 
                 <Link href={`/${activeSlug}`} className={styles.primaryButton}>
-                  Ver detalhes da área
+                  {isEn ? 'View area details' : 'Ver detalhes da área'}
                 </Link>
               </div>
             </div>

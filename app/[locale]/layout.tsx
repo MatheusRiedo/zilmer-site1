@@ -23,12 +23,15 @@ export async function generateMetadata({
   const messages = await getMessages({ locale })
   
   return {
-    title: locale === 'en' 
-      ? 'Zilmer Transformers' 
+    title: locale === 'en'
+      ? 'Zilmer Transformers'
       : 'Zilmer Transformadores',
     description: locale === 'en'
       ? 'High-quality transformers - Oil-immersed transformers, dry-type transformers and instrument transformers'
       : 'Transformadores de alta qualidade - Transformadores imersos em óleo, transformadores a seco e transformadores para instrumentos',
+    icons: {
+      icon: '/favicon.png',
+    },
   }
 }
 

@@ -2,6 +2,9 @@ import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
   title: 'Zilmer Transformadores',
+  icons: {
+    icon: '/favicon.png',
+  },
 }
 
 // Root layout - minimal layout for non-internationalized routes (api, admin)

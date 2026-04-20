@@ -4,6 +4,7 @@ import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import NextLink from 'next/link'
 import styles from './ProjetosRecentes.module.css'
+import { useLocale } from 'next-intl'
 
 interface NoticiaItem {
   id: string
@@ -22,10 +23,12 @@ interface NoticiasData {
 }
 
 export default function ProjetosRecentes() {
+  const locale = useLocale()
+  const isEn = locale === 'en'
   const [data, setData] = useState<NoticiasData | null>(null)
 
   useEffect(() => {
-    fetch('/api/admin/noticias')
+    fetch(`/api/admin/noticias?locale=${locale}`)
       .then((res) => res.json())
       .then((json: NoticiasData) => setData(json))
       .catch(() => {})
@@ -39,7 +42,7 @@ export default function ProjetosRecentes() {
     <section className={styles.projetosSection}>
       <div className="container">
         <div className={styles.header}>
-          <h2 className={styles.title}>Notícias</h2>
+          <h2 className={styles.title}>{isEn ? 'News' : 'Notícias'}</h2>
           <p className={styles.subtitle}>{data.section.subtitle}</p>
         </div>
 

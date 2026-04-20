@@ -5,10 +5,11 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
-import areasDataJson from '@/data/areas.json'
+import areasDataPtJson from '@/data/areas.json'
+import areasDataEnJson from '@/data/areas.en.json'
+import { useLocale } from 'next-intl'
 
-// Dados completos das áreas de aplicação
-const areasData = areasDataJson as {
+type AreasDataType = {
   [key: string]: {
     title: string
     aplicacao: {
@@ -55,8 +56,11 @@ function renderText(text: string | undefined | null) {
 const areasOrder = ['transporte', 'hidreletrica', 'mineracao', 'subestacoes', 'energias-renovaveis', 'controle-medicao']
 
 export default function AreaPage({ params }: { params: { slug: string } }) {
+  const locale = useLocale()
+  const isEn = locale === 'en'
+  const areasData = (isEn ? areasDataEnJson : areasDataPtJson) as AreasDataType
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  
+
   if (!params?.slug) {
     notFound()
   }
@@ -104,12 +108,12 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
         </div>
         
         {/* Setas de navegação */}
-        <Link href={`/areas/${prevSlug}`} className={styles.heroNavArrow} style={{ left: '20px' }} aria-label={`Ir para ${prevArea.title}`}>
+        <Link href={`/areas/${prevSlug}`} className={styles.heroNavArrow} style={{ left: '20px' }} aria-label={isEn ? `Go to ${prevArea.title}` : `Ir para ${prevArea.title}`}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </Link>
-        <Link href={`/areas/${nextSlug}`} className={styles.heroNavArrow} style={{ right: '20px' }} aria-label={`Ir para ${nextArea.title}`}>
+        <Link href={`/areas/${nextSlug}`} className={styles.heroNavArrow} style={{ right: '20px' }} aria-label={isEn ? `Go to ${nextArea.title}` : `Ir para ${nextArea.title}`}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
@@ -147,7 +151,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
                     <button
                       className={styles.carouselArrowLeft}
                       onClick={prevImage}
-                      aria-label="Imagem anterior"
+                      aria-label={isEn ? 'Previous image' : 'Imagem anterior'}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <polyline points="15 18 9 12 15 6"></polyline>
@@ -156,7 +160,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
                     <button
                       className={styles.carouselArrowRight}
                       onClick={nextImage}
-                      aria-label="Próxima imagem"
+                      aria-label={isEn ? 'Next image' : 'Próxima imagem'}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -168,7 +172,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
                           key={index}
                           className={`${styles.carouselDot} ${currentImageIndex === index ? styles.active : ''}`}
                           onClick={() => setCurrentImageIndex(index)}
-                          aria-label={`Ir para imagem ${index + 1}`}
+                          aria-label={isEn ? `Go to image ${index + 1}` : `Ir para imagem ${index + 1}`}
                         />
                       ))}
                     </div>
@@ -210,13 +214,13 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
         <div className="container">
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>
-              {(area as any).cta?.title || 'Interessado em nossas soluções?'}
+              {(area as any).cta?.title || (isEn ? 'Interested in our solutions?' : 'Interessado em nossas soluções?')}
             </h2>
             <p className={styles.ctaText}>
-              {(area as any).cta?.text || 'Entre em contato e descubra como podemos ajudar seu projeto'}
+              {(area as any).cta?.text || (isEn ? 'Contact us and discover how we can support your project.' : 'Entre em contato e descubra como podemos ajudar seu projeto')}
             </p>
             <Link href="/contato" className={styles.ctaButton}>
-              Fale Conosco
+              {isEn ? 'Contact Us' : 'Fale Conosco'}
             </Link>
           </div>
         </div>

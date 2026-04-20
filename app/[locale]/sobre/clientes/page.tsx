@@ -1,14 +1,10 @@
 import Image from 'next/image'
 import styles from './page.module.css'
 // @ts-ignore
-import sobreDataJson from '@/data/sobre.json'
-
-const sobreData = sobreDataJson as {
-  clientes: {
-    title: string
-    description: string
-  }
-}
+import sobreDataPt from '@/data/sobre.json'
+// @ts-ignore
+import sobreDataEn from '@/data/sobre.en.json'
+import { getLocale } from 'next-intl/server'
 
 // Adicione aqui os nomes dos arquivos de imagens dos clientes
 // Coloque as imagens na pasta: public/images/clientes/
@@ -29,7 +25,11 @@ function renderText(text: string | undefined | null) {
   return <p>{text}</p>
 }
 
-export default function ClientesPage() {
+export default async function ClientesPage() {
+  const locale = await getLocale()
+  const sobreData = (locale === 'en' ? sobreDataEn : sobreDataPt) as {
+    clientes: { title: string; description: string }
+  }
   return (
     <section className={styles.page}>
       <div className="container">

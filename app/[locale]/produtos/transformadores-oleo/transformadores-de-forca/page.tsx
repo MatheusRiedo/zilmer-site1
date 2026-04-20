@@ -5,8 +5,11 @@ import Image from 'next/image'
 import ImageGallery from '@/components/ImageGallery'
 import ContactButton from '@/components/ContactButton'
 import styles from './page.module.css'
+import { useLocale } from 'next-intl'
 
 export default function TransformadoresDeForcaPage() {
+  const locale = useLocale()
+  const isEn = locale === 'en'
   const [forceTransformerCategories, setForceTransformerCategories] = useState<Array<{
     id: string
     title: string
@@ -102,8 +105,8 @@ export default function TransformadoresDeForcaPage() {
     return (
       <section className={styles.page}>
         <div className="container">
-          <h1>Transformadores de Força</h1>
-          <p>Carregando...</p>
+          <h1>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h1>
+          <p>{isEn ? 'Loading...' : 'Carregando...'}</p>
         </div>
       </section>
     )
@@ -113,8 +116,8 @@ export default function TransformadoresDeForcaPage() {
     return (
       <section className={styles.page}>
         <div className="container">
-          <h1>Transformadores de Força</h1>
-          <p>Nenhuma categoria disponível.</p>
+          <h1>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h1>
+          <p>{isEn ? 'No categories available.' : 'Nenhuma categoria disponível.'}</p>
         </div>
       </section>
     )
@@ -123,12 +126,11 @@ export default function TransformadoresDeForcaPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <h1>Transformadores de Força</h1>
-        
+        <h1>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h1>
+
         <div className={styles.forcePageContent}>
-          {/* Sidebar de categorias */}
           <div className={styles.categorySidebar}>
-            <h2>Categories</h2>
+            <h2>{isEn ? 'Categories' : 'Categorias'}</h2>
             <nav className={styles.categoryNav}>
               {forceTransformerCategories.map((category) => (
                 <button
@@ -165,7 +167,7 @@ export default function TransformadoresDeForcaPage() {
               </div>
 
               <div className={styles.specifications}>
-                <h3>Especificações Técnicas</h3>
+                <h3>{isEn ? 'Technical Specifications' : 'Especificações Técnicas'}</h3>
                 <ul className={styles.specificationsList}>
                   {selectedCategory.specifications.map((spec, index) => (
                     <li key={index}>{spec}</li>
@@ -179,7 +181,7 @@ export default function TransformadoresDeForcaPage() {
             </div>
           ) : (
             <div className={styles.categoryDetail}>
-              <p>Selecione uma categoria</p>
+              <p>{isEn ? 'Select a category' : 'Selecione uma categoria'}</p>
             </div>
           )}
         </div>

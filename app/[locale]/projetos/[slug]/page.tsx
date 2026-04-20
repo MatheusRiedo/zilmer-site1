@@ -4,6 +4,7 @@ import { use } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
+import { useLocale } from 'next-intl'
 
 interface Noticia {
   id: string
@@ -15,7 +16,7 @@ interface Noticia {
   date: string
 }
 
-const noticias: Noticia[] = [
+const noticiasPt: Noticia[] = [
   {
     id: '1',
     title: 'Projeto em Operação - Hidrelétrica',
@@ -24,9 +25,7 @@ const noticias: Noticia[] = [
     slug: 'projeto-hidreletrica',
     content: `
       <p>Nossos transformadores de força instalados na usina hidrelétrica continuam operando com excelência, garantindo o fornecimento estável de energia elétrica para a região.</p>
-      
       <p>O projeto, que foi implementado há dois anos, demonstra a robustez e confiabilidade dos nossos equipamentos em condições de operação contínua. Os transformadores foram projetados especificamente para atender às demandas de alta potência do sistema de geração.</p>
-      
       <p>Com monitoramento constante e manutenção preventiva, os equipamentos mantêm seus parâmetros de desempenho dentro das especificações técnicas, garantindo eficiência energética e segurança operacional.</p>
     `,
     date: '2024-01-15',
@@ -39,9 +38,7 @@ const noticias: Noticia[] = [
     slug: 'projeto-subestacao',
     content: `
       <p>Acabamos de concluir a instalação de uma solução completa em transformadores para uma subestação industrial de grande porte. O projeto representa um marco importante na expansão da infraestrutura elétrica da região.</p>
-      
       <p>Os transformadores foram customizados para atender às necessidades específicas do cliente, incluindo requisitos de alta tensão e capacidade de carga. A instalação foi realizada por nossa equipe técnica especializada, seguindo rigorosos protocolos de segurança.</p>
-      
       <p>Atualmente, os equipamentos estão em fase de testes e comissionamento, com previsão de entrada em operação comercial nas próximas semanas.</p>
     `,
     date: '2024-02-20',
@@ -54,10 +51,50 @@ const noticias: Noticia[] = [
     slug: 'projeto-mineracao',
     content: `
       <p>Nossos transformadores instalados em operações de mineração continuam demonstrando sua capacidade de resistir a condições extremas de operação. Projetados especificamente para ambientes industriais desafiadores, os equipamentos mantêm alta performance mesmo sob condições severas.</p>
-      
       <p>A robustez dos transformadores é essencial neste tipo de aplicação, onde a confiabilidade é crítica para manter a produção. Nossos equipamentos foram testados e aprovados para operação em ambientes com alta umidade, variações de temperatura e exposição a partículas.</p>
-      
       <p>O projeto tem sido um sucesso, com os transformadores operando sem interrupções e mantendo todos os parâmetros dentro das especificações técnicas.</p>
+    `,
+    date: '2024-01-10',
+  },
+]
+
+const noticiasEn: Noticia[] = [
+  {
+    id: '1',
+    title: 'Project in Operation – Hydropower',
+    description: 'Power transformers for a hydropower generation system continue operating with maximum efficiency and reliability.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-hidreletrica',
+    content: `
+      <p>Our power transformers installed at the hydropower plant continue operating with excellence, ensuring stable supply of electrical energy to the region.</p>
+      <p>The project, implemented two years ago, demonstrates the robustness and reliability of our equipment under continuous operating conditions. The transformers were designed specifically to meet the high-power demands of the generation system.</p>
+      <p>With constant monitoring and preventive maintenance, the equipment maintains its performance parameters within the technical specifications, ensuring energy efficiency and operational safety.</p>
+    `,
+    date: '2024-01-15',
+  },
+  {
+    id: '2',
+    title: 'New Applied Project – Industrial Substation',
+    description: 'Complete transformer solution for a large-scale substation recently installed and under commissioning.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-subestacao',
+    content: `
+      <p>We have just completed the installation of a complete transformer solution for a large-scale industrial substation. The project represents an important milestone in the expansion of the region's electrical infrastructure.</p>
+      <p>The transformers were customised to meet the client's specific requirements, including high-voltage and load-capacity specifications. Installation was carried out by our specialised technical team, following rigorous safety protocols.</p>
+      <p>The equipment is currently undergoing testing and commissioning, with commercial operation expected within the coming weeks.</p>
+    `,
+    date: '2024-02-20',
+  },
+  {
+    id: '3',
+    title: 'Project in Operation – Mining',
+    description: 'Robust transformers for operation in a mining environment, maintaining high performance and durability.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-mineracao',
+    content: `
+      <p>Our transformers installed in mining operations continue to demonstrate their capacity to withstand extreme operating conditions. Designed specifically for challenging industrial environments, the equipment maintains high performance even under severe conditions.</p>
+      <p>The robustness of the transformers is essential in this type of application, where reliability is critical to maintaining production. Our equipment has been tested and approved for operation in environments with high humidity, temperature variations and particle exposure.</p>
+      <p>The project has been a success, with the transformers operating without interruption and maintaining all parameters within the technical specifications.</p>
     `,
     date: '2024-01-10',
   },
@@ -65,6 +102,9 @@ const noticias: Noticia[] = [
 
 export default function NoticiaPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = use(params)
+  const locale = useLocale()
+  const isEn = locale === 'en'
+  const noticias = isEn ? noticiasEn : noticiasPt
   const noticia = noticias.find((n) => n.slug === slug)
 
   if (!noticia) {
@@ -72,11 +112,11 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
       <section className={styles.page}>
         <div className="container">
           <Link href="/" className={styles.backLink}>
-            ← Voltar para Home
+            {isEn ? '← Back to Home' : '← Voltar para Home'}
           </Link>
           <div className={styles.article}>
-            <h1 className={styles.title}>Notícia não encontrada</h1>
-            <p>A notícia que você está procurando não existe.</p>
+            <h1 className={styles.title}>{isEn ? 'Article not found' : 'Notícia não encontrada'}</h1>
+            <p>{isEn ? 'The article you are looking for does not exist.' : 'A notícia que você está procurando não existe.'}</p>
           </div>
         </div>
       </section>
@@ -85,7 +125,7 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString('pt-BR', {
+    return date.toLocaleDateString(isEn ? 'en-GB' : 'pt-BR', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
@@ -96,7 +136,7 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
     <section className={styles.page}>
       <div className="container">
         <Link href="/" className={styles.backLink}>
-          ← Voltar para Home
+          {isEn ? '← Back to Home' : '← Voltar para Home'}
         </Link>
 
         <article className={styles.article}>

@@ -97,8 +97,43 @@
   color: var(--secondary-color);
 }
 
-.menuToggle {
+.langBtn {
+  background: transparent;
+  border: 1.5px solid var(--primary-color, #0047b2);
+  color: var(--primary-color, #0047b2);
+  padding: 5px 12px;
+  border-radius: 4px;
+  font-weight: 600;
+  font-size: 0.8rem;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+  line-height: 1;
+}
+
+.langBtn:hover:not(:disabled) {
+  background: var(--primary-color, #0047b2);
+  color: #fff;
+}
+
+.langBtn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* In nav (desktop only) */
+.nav .langBtn {
+  display: flex;
+}
+
+.headerRight {
   display: none;
+  align-items: center;
+  gap: 12px;
+}
+
+.menuToggle {
+  display: flex;
   flex-direction: column;
   gap: 5px;
   background: none;
@@ -115,8 +150,13 @@
 }
 
 @media (max-width: 768px) {
-  .menuToggle {
+  .headerRight {
     display: flex;
+  }
+
+  /* Hide the langBtn inside the collapsed nav on mobile */
+  .nav .langBtn {
+    display: none;
   }
 
   .nav {

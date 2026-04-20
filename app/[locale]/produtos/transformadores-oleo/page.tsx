@@ -1,16 +1,20 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './page.module.css'
-import produtosData from '@/data/produtos.json'
+import produtosDataPt from '@/data/produtos.json'
+import produtosDataEn from '@/data/produtos.en.json'
 import { unstable_noStore as noStore } from 'next/cache'
+import { getLocale } from 'next-intl/server'
 
 // Forçar atualização dinâmica para sempre buscar dados atualizados
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
 
-export default function TransformadoresOleoPage() {
-  // Desabilitar cache para garantir dados sempre atualizados
+export default async function TransformadoresOleoPage() {
   noStore()
+  const locale = await getLocale()
+  const produtosData = locale === 'en' ? produtosDataEn : produtosDataPt
+  const isEn = locale === 'en'
   const produtos = produtosData.oleo?.produtos || {}
   
   // Mapear produtos para seus slugs e imagens padrão
@@ -48,12 +52,12 @@ export default function TransformadoresOleoPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <h1>Transformadores Imersos em Óleo</h1>
+        <h1>{isEn ? 'Oil-Immersed Transformers' : 'Transformadores Imersos em Óleo'}</h1>
         <div className={styles.content}>
           <div className={styles.intro}>
             <p>
-              {produtosData.oleo?.intro?.description || 
-                'Transformadores imersos em óleo são equipamentos essenciais para sistemas elétricos de alta potência, oferecendo excelente dissipação térmica e rigidez dielétrica. Nossos transformadores são projetados para atender as mais diversas aplicações industriais com máxima confiabilidade e eficiência.'}
+              {(produtosData.oleo?.intro?.description as string) ||
+                (isEn ? 'Oil-immersed transformers are essential equipment for high-power electrical systems, offering excellent thermal dissipation and dielectric rigidity. Our transformers are designed to serve the most diverse industrial applications with maximum reliability and efficiency.' : 'Transformadores imersos em óleo são equipamentos essenciais para sistemas elétricos de alta potência, oferecendo excelente dissipação térmica e rigidez dielétrica. Nossos transformadores são projetados para atender as mais diversas aplicações industriais com máxima confiabilidade e eficiência.')}
             </p>
           </div>
 
@@ -75,8 +79,8 @@ export default function TransformadoresOleoPage() {
                   </div>
                 ) : null
               })()}
-              <h3>Transformadores de Força</h3>
-              <p>15 a 72 kV até 20 MVA</p>
+              <h3>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h3>
+              <p>15{isEn ? ' to' : ' a'} 72 kV {isEn ? 'up to' : 'até'} 20 MVA</p>
             </Link>
             <Link href="/produtos/transformadores-oleo/transformadores-auxiliares" className={styles.featuredCard}>
               {(() => {
@@ -95,8 +99,8 @@ export default function TransformadoresOleoPage() {
                   </div>
                 ) : null
               })()}
-              <h3>Transformadores Auxiliares</h3>
-              <p>5 kVA até 500 kVA</p>
+              <h3>{isEn ? 'Auxiliary Transformers' : 'Transformadores Auxiliares'}</h3>
+              <p>5 kVA {isEn ? 'up to' : 'até'} 500 kVA</p>
             </Link>
           </div>
 

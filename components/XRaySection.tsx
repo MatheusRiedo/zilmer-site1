@@ -2,8 +2,11 @@
 
 import { useRef, useState, useCallback } from 'react'
 import styles from './XRaySection.module.css'
+import { useLocale } from 'next-intl'
 
 export default function XRaySection() {
+  const locale = useLocale()
+  const isEn = locale === 'en'
   const containerRef = useRef<HTMLDivElement>(null)
   const [cursor, setCursor] = useState({ x: 0, y: 0 })
   const [isHovering, setIsHovering] = useState(false)
@@ -28,31 +31,31 @@ export default function XRaySection() {
       <div className={styles.inner}>
         {/* Left: text */}
         <div className={styles.textSide}>
-          <div className={styles.tagline}>TECNOLOGIA ZILMER</div>
+          <div className={styles.tagline}>{isEn ? 'ZILMER TECHNOLOGY' : 'TECNOLOGIA ZILMER'}</div>
           <h2 className={styles.headline}>
-            ENGENHARIA<br />
-            <span className={styles.accentWord}>DE PRECISÃO</span>
+            {isEn ? 'PRECISION' : 'ENGENHARIA'}<br />
+            <span className={styles.accentWord}>{isEn ? 'ENGINEERING' : 'DE PRECISÃO'}</span>
           </h2>
           <p className={styles.subtitle}>
-            Cada transformador é projetado com rigor técnico absoluto.
-            Componentes internos selecionados ao milímetro, testados sob as
-            normas mais exigentes para garantir décadas de operação confiável.
+            {isEn
+              ? 'Each transformer is engineered with absolute technical rigour. Internal components selected to the millimetre, tested under the most demanding standards to guarantee decades of reliable operation.'
+              : 'Cada transformador é projetado com rigor técnico absoluto. Componentes internos selecionados ao milímetro, testados sob as normas mais exigentes para garantir décadas de operação confiável.'}
           </p>
 
           <div className={styles.statsRow}>
             <div className={styles.stat}>
               <span className={styles.statNumber}>60+</span>
-              <span className={styles.statLabel}>anos de experiência</span>
+              <span className={styles.statLabel}>{isEn ? 'years of experience' : 'anos de experiência'}</span>
             </div>
             <div className={styles.statDivider} />
             <div className={styles.stat}>
               <span className={styles.statNumber}>ISO</span>
-              <span className={styles.statLabel}>certificação internacional</span>
+              <span className={styles.statLabel}>{isEn ? 'international certification' : 'certificação internacional'}</span>
             </div>
             <div className={styles.statDivider} />
             <div className={styles.stat}>
               <span className={styles.statNumber}>100%</span>
-              <span className={styles.statLabel}>testado em fábrica</span>
+              <span className={styles.statLabel}>{isEn ? 'factory tested' : 'testado em fábrica'}</span>
             </div>
           </div>
         </div>

@@ -11,6 +11,8 @@ frontend:
     baseDirectory: .next
     files:
       - '**/*'
+    excludes:
+      - 'cache/**'
   cache:
     paths:
       - node_modules/**/*

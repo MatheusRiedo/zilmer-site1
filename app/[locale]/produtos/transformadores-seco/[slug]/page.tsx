@@ -2,6 +2,7 @@ import { notFound } from 'next/navigation'
 import ImageGallery from '@/components/ImageGallery'
 import ContactButton from '@/components/ContactButton'
 import styles from './detail.module.css'
+import { cdnUrl } from '@/lib/assets'
 import produtosDataPt from '@/data/produtos.json'
 import produtosDataEn from '@/data/produtos.en.json'
 import { unstable_noStore as noStore } from 'next/cache'
@@ -84,7 +85,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
                     </p>
                   </div>
                   <a
-                    href="/catalogos/CATALOGO-TAI-e-TCI.pdf"
+                    href={cdnUrl("/catalogos/CATALOGO-TAI-e-TCI.pdf")}
                     download
                     className={styles.downloadButton}
                   >

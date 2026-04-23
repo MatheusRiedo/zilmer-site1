@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import Image from 'next/image'
 import styles from './ImageGallery.module.css'
+import { cdnUrl } from '@/lib/assets'
 
 type ImageGalleryProps = {
   images: string[]
@@ -72,7 +73,7 @@ export default function ImageGallery({
         <div className={styles.imageWrapper}>
           <div className={styles.mainImage}>
             <Image
-              src={currentImage}
+              src={cdnUrl(currentImage)}
               alt={alt}
               fill
               className={styles.image}
@@ -123,7 +124,7 @@ export default function ImageGallery({
               aria-label={`Selecionar imagem ${index + 1}`}
             >
               <img
-                src={src}
+                src={cdnUrl(src)}
                 alt={`${alt} - miniatura ${index + 1}`}
                 className={styles.thumbnailImage}
               />

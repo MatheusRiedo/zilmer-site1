@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 import produtosDataPt from '@/data/produtos.json'
 import produtosDataEn from '@/data/produtos.en.json'
 import { unstable_noStore as noStore } from 'next/cache'
@@ -71,7 +72,7 @@ export default async function TransformadoresOleoPage() {
                 return forcaImage ? (
                   <div className={styles.featuredImage}>
                     <Image
-                      src={forcaImage}
+                      src={cdnUrl(forcaImage)}
                       alt="Transformadores de Força"
                       fill
                       className={styles.featuredImageContent}
@@ -91,7 +92,7 @@ export default async function TransformadoresOleoPage() {
                 return auxiliaresImage ? (
                   <div className={styles.featuredImage}>
                     <Image
-                      src={auxiliaresImage}
+                      src={cdnUrl(auxiliaresImage)}
                       alt="Transformadores Auxiliares"
                       fill
                       className={styles.featuredImageContent}
@@ -114,7 +115,7 @@ export default async function TransformadoresOleoPage() {
                 <Link key={key} href={`/produtos/transformadores-oleo/${produtoMap.slug}`} className={styles.productCard}>
                   <div className={styles.productImage}>
                     <Image
-                      src={getProductImage(key)}
+                      src={cdnUrl(getProductImage(key))}
                       alt={produto.title || produtoMap.slug}
                       fill
                       className={styles.productImageContent}

@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 // @ts-ignore
 import sobreDataPt from '@/data/sobre.json'
 // @ts-ignore
@@ -40,7 +41,7 @@ export default async function ClientesPage() {
           {clientes.length > 0 ? (
             <div className={styles.imageContainer}>
               <Image
-                src={`/images/clientes/${clientes[0]}`}
+                src={cdnUrl(`/images/clientes/${clientes[0]}`)}
                 alt="Nossos Clientes"
                 width={1200}
                 height={800}

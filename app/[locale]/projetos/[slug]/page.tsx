@@ -5,6 +5,7 @@ import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
 import { useLocale } from 'next-intl'
+import { cdnUrl } from '@/lib/assets'
 
 interface Noticia {
   id: string
@@ -147,7 +148,7 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
 
           <div className={styles.imageContainer}>
             <Image
-              src={noticia.image}
+              src={cdnUrl(noticia.image)}
               alt={noticia.title}
               fill
               className={styles.image}

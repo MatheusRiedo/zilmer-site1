@@ -3,6 +3,7 @@
 import { useRef, useState, useCallback } from 'react'
 import styles from './XRaySection.module.css'
 import { useLocale } from 'next-intl'
+import { cdnUrl } from '@/lib/assets'
 
 export default function XRaySection() {
   const locale = useLocale()
@@ -72,7 +73,7 @@ export default function XRaySection() {
             {/* External image (base layer) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/xray/tco-interno.jpg"
+              src={cdnUrl("/images/xray/tco-interno.jpg")}
               alt="Transformador externo"
               className={styles.imgBase}
               draggable={false}
@@ -81,7 +82,7 @@ export default function XRaySection() {
             {/* Internal image (revealed layer) */}
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img
-              src="/images/xray/tco-externo.jpg"
+              src={cdnUrl("/images/xray/tco-externo.jpg")}
               alt="Transformador interno - raio-x"
               className={styles.imgReveal}
               style={{ WebkitMaskImage: mask, maskImage: mask }}

@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl'
 import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 
 function stripHtml(text: string): string {
   return text.replace(/<[^>]*>/g, '').trim()
@@ -34,7 +35,7 @@ export default function SobrePage() {
           <div className={styles.imageSection}>
             <div className={styles.imageContainer}>
               <img
-                src="/images/sobre/transformadores-instalacao.jpg"
+                src={cdnUrl("/images/sobre/transformadores-instalacao.jpg")}
                 alt="Transformadores Zilmer em instalação industrial"
                 className={styles.heroImage}
               />

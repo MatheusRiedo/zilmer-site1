@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
 import { useLocale } from 'next-intl'
+import { cdnUrl } from '@/lib/assets'
 
 const projetosPt = [
   {
@@ -76,7 +77,7 @@ export default function ProjetosPage() {
               <Link href={`/projetos/${projeto.slug}`} className={styles.cardLink}>
                 <div className={styles.imageContainer}>
                   <Image
-                    src={projeto.image}
+                    src={cdnUrl(projeto.image)}
                     alt={projeto.title}
                     fill
                     className={styles.image}

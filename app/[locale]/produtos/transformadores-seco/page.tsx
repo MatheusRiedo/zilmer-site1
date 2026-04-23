@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 import { unstable_noStore as noStore } from 'next/cache'
 import { readFileSync } from 'fs'
 import { join } from 'path'
@@ -81,7 +82,7 @@ export default async function TransformadoresSecoPage() {
                 return mediaTensaoImage ? (
                   <div className={styles.featuredImage}>
                     <Image
-                      src={mediaTensaoImage}
+                      src={cdnUrl(mediaTensaoImage)}
                       alt="Transformadores de Média Tensão"
                       width={500}
                       height={300}
@@ -107,7 +108,7 @@ export default async function TransformadoresSecoPage() {
                 <Link key={key} href={`/produtos/transformadores-seco/${produtoMap.slug}`} className={styles.productCard}>
                   <div className={styles.productImage}>
                     <Image
-                      src={getProductImage(key)}
+                      src={cdnUrl(getProductImage(key))}
                       alt={produto.title || produtoMap.slug}
                       fill
                       className={styles.productImageContent}

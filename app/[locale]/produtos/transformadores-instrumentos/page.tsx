@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import Link from 'next/link'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 import { tpInternosModels } from './tp-internos-data'
 import { tpExternosModels } from './tp-externos-data'
 import { tcInternosModels } from './tc-internos-data'
@@ -40,14 +41,14 @@ export default async function TransformadoresInstrumentosPage() {
                   {tpInternosModels.map((model) => (
                     <Link
                       key={model.id}
-                      href={model.pdf || '#'}
+                      href={model.pdf ? cdnUrl(model.pdf) : '#'}
                       className={styles.modelCard}
                       target={model.pdf ? '_blank' : undefined}
                       rel={model.pdf ? 'noopener noreferrer' : undefined}
                     >
                       <div className={styles.modelImageContainer}>
                         <Image
-                          src={model.image}
+                          src={cdnUrl(model.image)}
                           alt={`Modelo ${model.name}`}
                           width={200}
                           height={200}
@@ -75,14 +76,14 @@ export default async function TransformadoresInstrumentosPage() {
                   {tpExternosModels.map((model) => (
                     <Link
                       key={model.id}
-                      href={model.pdf || '#'}
+                      href={model.pdf ? cdnUrl(model.pdf) : '#'}
                       className={styles.modelCard}
                       target={model.pdf ? '_blank' : undefined}
                       rel={model.pdf ? 'noopener noreferrer' : undefined}
                     >
                       <div className={styles.modelImageContainer}>
                         <Image
-                          src={model.image}
+                          src={cdnUrl(model.image)}
                           alt={`Modelo ${model.name}`}
                           width={200}
                           height={200}
@@ -114,14 +115,14 @@ export default async function TransformadoresInstrumentosPage() {
                   {tcInternosModels.map((model) => (
                     <Link
                       key={model.id}
-                      href={model.pdf || '#'}
+                      href={model.pdf ? cdnUrl(model.pdf) : '#'}
                       className={styles.modelCard}
                       target={model.pdf ? '_blank' : undefined}
                       rel={model.pdf ? 'noopener noreferrer' : undefined}
                     >
                       <div className={styles.modelImageContainer}>
                         <Image
-                          src={model.image}
+                          src={cdnUrl(model.image)}
                           alt={`Modelo ${model.name}`}
                           width={200}
                           height={200}
@@ -149,14 +150,14 @@ export default async function TransformadoresInstrumentosPage() {
                   {tcExternosModels.map((model) => (
                     <Link
                       key={model.id}
-                      href={model.pdf || '#'}
+                      href={model.pdf ? cdnUrl(model.pdf) : '#'}
                       className={styles.modelCard}
                       target={model.pdf ? '_blank' : undefined}
                       rel={model.pdf ? 'noopener noreferrer' : undefined}
                     >
                       <div className={styles.modelImageContainer}>
                         <Image
-                          src={model.image}
+                          src={cdnUrl(model.image)}
                           alt={`Modelo ${model.name}`}
                           width={200}
                           height={200}

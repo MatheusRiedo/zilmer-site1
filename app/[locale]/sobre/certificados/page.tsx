@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 // @ts-ignore
 import sobreDataPt from '@/data/sobre.json'
 // @ts-ignore
@@ -61,12 +62,12 @@ export default async function CertificadosPage() {
                   {certificado.type === 'pdf' ? (
                     <div className={styles.pdfContainer}>
                       <iframe
-                        src={`/images/certificados/${certificado.file}`}
+                        src={cdnUrl(`/images/certificados/${certificado.file}`)}
                         className={styles.pdfViewer}
                         title={certificado.title}
                       />
                       <a
-                        href={`/images/certificados/${certificado.file}`}
+                        href={cdnUrl(`/images/certificados/${certificado.file}`)}
                         target="_blank"
                         rel="noopener noreferrer"
                         className={styles.pdfLink}
@@ -76,7 +77,7 @@ export default async function CertificadosPage() {
                     </div>
                   ) : (
                     <Image
-                      src={`/images/certificados/${certificado.file}`}
+                      src={cdnUrl(`/images/certificados/${certificado.file}`)}
                       alt={certificado.title || `Certificado ${index + 1}`}
                       width={400}
                       height={560}

@@ -57,13 +57,13 @@
       "de-aterramento": {
         "title": "TRANSFORMADORES DE ATERRAMENTO EM ÓLEO",
         "longDescription": "Os transformadores de aterramento imersos em óleo têm a função de criar um neutro artificial e controlar a corrente de falta à terra em sistemas trifásicos que não possuem ponto de aterramento disponível. A isolação em óleo garante alta rigidez dielétrica, excelente dissipação térmica e operação confiável mesmo em ambientes industriais severos. Os modelos do tipo Zig-Zag oferecem caminho eficaz para correntes de sequência zero, proporcionando limitação controlada da corrente de falta e contribuindo para a estabilidade fase–terra. Já os transformadores Estrela com Delta Quebrado/aberto são utilizados quando se deseja maior sensibilidade na detecção de desequilíbrios e faltas à terra, favorecendo a atuação de relés específicos e melhorando a supervisão do sistema. Outra solução amplamente empregada é o banco trifásico formado por transformadores monofásicos imersos em óleo, que permite flexibilidade de manutenção, modularidade e ajuste individual de impedância, sendo ideal para aplicações especiais ou sistemas que exigem elevada precisão no aterramento. Em todas as topologias, a imersão em óleo assegura desempenho térmico robusto e maior durabilidade do isolamento, garantindo operação segura e eficiente em instalações industriais, sistemas de distribuição e aplicações de alta criticidade.",
-        "image": "/images/produtos/oleo/de-aterramento/RAO - HITACHI - 2572 kVA.png",
+        "image": "/images/produtos/oleo/de-aterramento/RAO - HITACHI - 2572 kVA.webp",
         "images": [
-          "/images/produtos/oleo/de-aterramento/RAO - HITACHI - 2572 kVA.png"
+          "/images/produtos/oleo/de-aterramento/RAO - HITACHI - 2572 kVA.webp"
         ],
         "firstImageIndex": 0,
         "captions": {
-          "/images/produtos/oleo/de-aterramento/RAO - HITACHI - 2572 kVA.png": "RAO 2572 kVA"
+          "/images/produtos/oleo/de-aterramento/RAO - HITACHI - 2572 kVA.webp": "RAO 2572 kVA"
         }
       },
       "autotransformadores": {
@@ -112,7 +112,7 @@
             "Isolação: Óleo mineral",
             "Níveis de proteção: IP00"
           ],
-          "image": "/images/produtos/oleo/transformadores-de-forca/500-a-3000-kv/1770401019265_TCO_-_PETROBRAS_-_3500_kVA.png"
+          "image": "/images/produtos/oleo/transformadores-de-forca/500-a-3000-kv/1770401019265_TCO_-_PETROBRAS_-_3500_kVA.webp"
         },
         "3-20": {
           "title": "3 MVA até 20 MVA",
@@ -124,11 +124,11 @@
             "Isolação: Óleo mineral",
             "Níveis de proteção: IP00"
           ],
-          "cardImage": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.png",
-          "image": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.png"
+          "cardImage": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.webp",
+          "image": "/images/produtos/oleo/transformadores-de-forca/3mva-a-20mva/TCO - GE POWER - 12500 kVA.webp"
         }
       },
-      "cardImage": "/images/produtos/oleo/transformadores-de-forca/500-a-3000-kv/1770401019265_TCO_-_PETROBRAS_-_3500_kVA.png"
+      "cardImage": "/images/produtos/oleo/transformadores-de-forca/500-a-3000-kv/1770401019265_TCO_-_PETROBRAS_-_3500_kVA.webp"
     }
   },
   "seco": {
@@ -142,12 +142,12 @@
         "image": "/images/produtos/seco/media-tensao/1770316961627__2__TAM_-_SABESP_-_500_kVA.png",
         "images": [
           "/images/produtos/seco/media-tensao/1770316961627__2__TAM_-_SABESP_-_500_kVA.png",
-          "/images/produtos/seco/media-tensao/TAM - AMC - 1000 kVA SEM CAIXA - vista DETALHE BARRAMENTO.png"
+          "/images/produtos/seco/media-tensao/TAM - AMC - 1000 kVA SEM CAIXA - vista DETALHE BARRAMENTO.webp"
         ],
         "firstImageIndex": 0,
         "captions": {
           "/images/produtos/seco/media-tensao/1770316961627__2__TAM_-_SABESP_-_500_kVA.png": "TAM 500 kVA",
-          "/images/produtos/seco/media-tensao/TAM - AMC - 1000 kVA SEM CAIXA - vista DETALHE BARRAMENTO.png": "TAM 1000 kVA (VISTA SUPERIOR SEM CAIXA)"
+          "/images/produtos/seco/media-tensao/TAM - AMC - 1000 kVA SEM CAIXA - vista DETALHE BARRAMENTO.webp": "TAM 1000 kVA (VISTA SUPERIOR SEM CAIXA)"
         }
       },
       "para-retificadores": {

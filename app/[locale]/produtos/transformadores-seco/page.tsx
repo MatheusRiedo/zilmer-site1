@@ -75,7 +75,7 @@ export default async function TransformadoresSecoPage() {
             <Link href="/produtos/transformadores-seco/media-tensao" className={styles.featuredCardSingle}>
               {(() => {
                 // Buscar imagem de média tensão - sempre buscar do JSON atualizado
-                const currentData = getProdutosData()
+                const currentData = getProdutosData(locale)
                 const mediaTensao = currentData.seco?.produtos?.['media-tensao' as keyof typeof currentData.seco.produtos] as any
                 const mediaTensaoImage = mediaTensao?.image || mediaTensao?.images?.[0] || null
                 return mediaTensaoImage ? (

@@ -8,6 +8,7 @@ import styles from './page.module.css'
 import areasDataPtJson from '@/data/areas.json'
 import areasDataEnJson from '@/data/areas.en.json'
 import { useLocale } from 'next-intl'
+import { cdnUrl } from '@/lib/assets'
 
 type AreasDataType = {
   [key: string]: {
@@ -98,7 +99,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
       <section className={styles.heroSection}>
         <div className={styles.heroBackground}>
           <Image
-            src={(area.aplicacao as any).heroImage || area.aplicacao.image}
+            src={cdnUrl((area.aplicacao as any).heroImage || area.aplicacao.image)}
             alt={area.title}
             fill
             className={styles.heroImage}
@@ -141,7 +142,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
             <div className={styles.aplicacaoImage}>
               <div className={styles.imageWrapper}>
                 <Image
-                  src={images[currentImageIndex]}
+                  src={cdnUrl(images[currentImageIndex])}
                   alt={area.aplicacao.title}
                   fill
                   className={styles.contentImage}

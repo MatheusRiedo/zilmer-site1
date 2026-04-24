@@ -5,17 +5,16 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  experimental: {
-    serverComponentsExternalPackages: ['sharp'],
-    outputFileTracingExcludes: {
-      '/api/admin/produtos/upload': ['public/**', '.next/cache/**'],
-      '/api/admin/produtos': ['public/**', '.next/cache/**'],
-      '/api/admin/produtos/images': ['public/**', '.next/cache/**'],
-      '/api/admin/areas': ['public/**', '.next/cache/**'],
-      '/api/admin/sobre': ['public/**', '.next/cache/**'],
-    },
+  // Correct key for Next.js 14.1+ (was experimental.serverComponentsExternalPackages)
+  serverExternalPackages: ['sharp'],
+  // Must be at root level in Next.js 14+ (not inside experimental)
+  outputFileTracingExcludes: {
+    '/api/admin/produtos/upload': ['public/**', '.next/cache/**'],
+    '/api/admin/produtos': ['public/**', '.next/cache/**'],
+    '/api/admin/produtos/images': ['public/**', '.next/cache/**'],
+    '/api/admin/areas': ['public/**', '.next/cache/**'],
+    '/api/admin/sobre': ['public/**', '.next/cache/**'],
   },
-  // output: 'export', // Desabilitado para desenvolvimento (habilite apenas para build de produção)
   images: {
     unoptimized: true,
     formats: ['image/avif', 'image/webp'],
@@ -23,12 +22,9 @@ const nextConfig = {
     imageSizes: [16, 32, 48, 64, 96, 128, 256, 384],
   },
   trailingSlash: true,
-  // Otimizações de performance
   compress: true,
   poweredByHeader: false,
   reactStrictMode: true,
-  // Otimizações adicionais para melhor performance
-  swcMinify: true,
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },

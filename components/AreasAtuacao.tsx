@@ -6,6 +6,7 @@ import styles from './AreasAtuacao.module.css'
 import areasDataPtJson from '@/data/areas.json'
 import areasDataEnJson from '@/data/areas.en.json'
 import { useLocale } from 'next-intl'
+import { cdnUrl } from '@/lib/assets'
 
 type AreasData = {
   [key: string]: {
@@ -68,7 +69,7 @@ export default function AreasAtuacao() {
         <div className={styles.backgroundImageWrapper}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img
-            src={heroImage}
+            src={cdnUrl(heroImage)}
             alt={activeArea.title}
             className={styles.backgroundImage}
           />

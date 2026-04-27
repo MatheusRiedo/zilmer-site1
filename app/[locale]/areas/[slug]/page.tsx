@@ -96,6 +96,10 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
 
   return (
     <div className={styles.page}>
+      {/* DEBUG - remove after confirming locale */}
+      <div style={{ position: 'fixed', bottom: 16, right: 16, background: '#000', color: '#0f0', fontFamily: 'monospace', fontSize: 13, padding: '6px 12px', zIndex: 9999, borderRadius: 4 }}>
+        locale: {locale} | isEn: {String(isEn)}
+      </div>
       {/* Hero Section */}
       <section className={styles.heroSection}>
         <div className={styles.heroBackground}>

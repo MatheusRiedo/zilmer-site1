@@ -56,7 +56,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale}>
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider locale={locale} messages={messages}>
           <Header />
           <main style={{ minHeight: '100vh', paddingTop: '76px' }}>{children}</main>
           <Footer />

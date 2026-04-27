@@ -5,9 +5,12 @@ import { useState } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
-import areasDataJson from '@/data/areas.json'
+import areasDataPtJson from '@/data/areas.json'
+import areasDataEnJson from '@/data/areas.en.json'
+import { useLocale } from 'next-intl'
+import { cdnUrl } from '@/lib/assets'
 
-const areasData = areasDataJson as {
+type AreasDataType = {
   [key: string]: {
     title: string
     aplicacao: {
@@ -56,6 +59,9 @@ export default function AreaSlugPage({
 }: {
   params: { slug: string }
 }) {
+  const locale = useLocale()
+  const isEn = locale === 'en'
+  const areasData = (isEn ? areasDataEnJson : areasDataPtJson) as AreasDataType
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   if (!params?.slug) {
@@ -95,7 +101,7 @@ export default function AreaSlugPage({
       <section className={styles.heroSection}>
         <div className={styles.heroBackground}>
           <Image
-            src={(area.aplicacao as any).heroImage || area.aplicacao.image}
+            src={cdnUrl((area.aplicacao as any).heroImage || area.aplicacao.image)}
             alt={area.title}
             fill
             className={styles.heroImage}
@@ -108,7 +114,7 @@ export default function AreaSlugPage({
           href={`/${prevSlug}`}
           className={styles.heroNavArrow}
           style={{ left: '20px' }}
-          aria-label={`Ir para ${prevArea?.title}`}
+          aria-label={isEn ? `Go to ${prevArea?.title}` : `Ir para ${prevArea?.title}`}
         >
           <svg
             width="32"
@@ -127,7 +133,7 @@ export default function AreaSlugPage({
           href={`/${nextSlug}`}
           className={styles.heroNavArrow}
           style={{ right: '20px' }}
-          aria-label={`Ir para ${nextArea?.title}`}
+          aria-label={isEn ? `Go to ${nextArea?.title}` : `Ir para ${nextArea?.title}`}
         >
           <svg
             width="32"
@@ -167,7 +173,7 @@ export default function AreaSlugPage({
             <div className={styles.aplicacaoImage}>
               <div className={styles.imageWrapper}>
                 <Image
-                  src={images[currentImageIndex]}
+                  src={cdnUrl(images[currentImageIndex])}
                   alt={area.aplicacao.title}
                   fill
                   className={styles.contentImage}
@@ -177,7 +183,7 @@ export default function AreaSlugPage({
                     <button
                       className={styles.carouselArrowLeft}
                       onClick={prevImage}
-                      aria-label="Imagem anterior"
+                      aria-label={isEn ? 'Previous image' : 'Imagem anterior'}
                     >
                       <svg
                         width="20"
@@ -193,7 +199,7 @@ export default function AreaSlugPage({
                     <button
                       className={styles.carouselArrowRight}
                       onClick={nextImage}
-                      aria-label="Próxima imagem"
+                      aria-label={isEn ? 'Next image' : 'Próxima imagem'}
                     >
                       <svg
                         width="20"
@@ -214,7 +220,7 @@ export default function AreaSlugPage({
                             currentImageIndex === index ? styles.active : ''
                           }`}
                           onClick={() => setCurrentImageIndex(index)}
-                          aria-label={`Ir para imagem ${index + 1}`}
+                          aria-label={isEn ? `Go to image ${index + 1}` : `Ir para imagem ${index + 1}`}
                         />
                       ))}
                     </div>
@@ -251,14 +257,13 @@ export default function AreaSlugPage({
         <div className="container">
           <div className={styles.ctaContent}>
             <h2 className={styles.ctaTitle}>
-              {(area as any).cta?.title || 'Interessado em nossas soluções?'}
+              {(area as any).cta?.title || (isEn ? 'Interested in our solutions?' : 'Interessado em nossas soluções?')}
             </h2>
             <p className={styles.ctaText}>
-              {(area as any).cta?.text ||
-                'Entre em contato e descubra como podemos ajudar seu projeto'}
+              {(area as any).cta?.text || (isEn ? 'Contact us and discover how we can support your project.' : 'Entre em contato e descubra como podemos ajudar seu projeto')}
             </p>
             <Link href="/contato" className={styles.ctaButton}>
-              Fale Conosco
+              {isEn ? 'Contact Us' : 'Fale Conosco'}
             </Link>
           </div>
         </div>

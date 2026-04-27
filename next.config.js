@@ -5,7 +5,7 @@ const withNextIntl = createNextIntlPlugin('./i18n/request.ts')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   env: {
-    NEXT_PUBLIC_CDN_URL: process.env.NEXT_PUBLIC_CDN_URL,
+    NEXT_PUBLIC_CDN_URL: 'https://zilmer-static-assets-494934331329-us-east-2-an.s3.us-east-2.amazonaws.com',
   },
   serverExternalPackages: ['sharp'],
   images: {

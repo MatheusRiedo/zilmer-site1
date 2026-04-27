@@ -40,8 +40,5 @@ next-env.d.ts
 # arquivos de informações de imagens
 /public/images/**/images-info.json
 
-# imagens movidas para S3
-/public/images/areas/**
 /public/images/clientes/**
-!/public/images/areas/README.md
 

@@ -57,6 +57,7 @@ function renderText(text: string | undefined | null) {
 const areasOrder = ['transporte', 'hidreletrica', 'mineracao', 'subestacoes', 'energias-renovaveis', 'controle-medicao']
 
 export default function AreaPage({ params }: { params: { slug: string } }) {
+  console.log('[AreaPage] NEXT_PUBLIC_CDN_URL =', process.env.NEXT_PUBLIC_CDN_URL)
   const locale = useLocale()
   const isEn = locale === 'en'
   const areasData = (isEn ? areasDataEnJson : areasDataPtJson) as AreasDataType

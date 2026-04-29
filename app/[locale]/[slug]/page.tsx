@@ -4,8 +4,10 @@ import { notFound } from 'next/navigation'
 import { useState } from 'react'
 import Image from 'next/image'
 import { Link } from '@/i18n/routing'
+import { useLocale } from 'next-intl'
 import styles from './page.module.css'
 import areasDataJson from '@/data/areas.json'
+import areasDataEnJson from '@/data/areas.en.json'
 
 const areasData = areasDataJson as {
   [key: string]: {
@@ -57,6 +59,8 @@ export default function AreaSlugPage({
   params: { slug: string }
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
+  const locale = useLocale()
+  const areasData = locale === 'en' ? (areasDataEnJson as typeof areasDataJson) : areasDataJson
 
   if (!params?.slug) {
     notFound()

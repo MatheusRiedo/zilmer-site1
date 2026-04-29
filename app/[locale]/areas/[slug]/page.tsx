@@ -215,22 +215,6 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
           Código arquivado em: app/areas/[slug]/page.archived.tsx
       */}
 
-      {/* CTA Section */}
-      <section className={styles.ctaSection}>
-        <div className="container">
-          <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>
-              {(area as any).cta?.title || (isEn ? 'Interested in our solutions?' : 'Interessado em nossas soluções?')}
-            </h2>
-            <p className={styles.ctaText}>
-              {(area as any).cta?.text || (isEn ? 'Contact us and discover how we can support your project.' : 'Entre em contato e descubra como podemos ajudar seu projeto')}
-            </p>
-            <Link href="/contato" className={styles.ctaButton}>
-              {isEn ? 'Contact Us' : 'Fale Conosco'}
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

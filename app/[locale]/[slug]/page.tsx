@@ -250,23 +250,6 @@ export default function AreaSlugPage({
         </div>
       </section>
 
-      {/* CTA Section */}
-      <section className={styles.ctaSection}>
-        <div className="container">
-          <div className={styles.ctaContent}>
-            <h2 className={styles.ctaTitle}>
-              {(area as any).cta?.title || 'Interessado em nossas soluções?'}
-            </h2>
-            <p className={styles.ctaText}>
-              {(area as any).cta?.text ||
-                'Entre em contato e descubra como podemos ajudar seu projeto'}
-            </p>
-            <Link href="/contato" className={styles.ctaButton}>
-              Fale Conosco
-            </Link>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }

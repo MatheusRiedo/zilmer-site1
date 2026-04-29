@@ -1,118 +1,52 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import Image from 'next/image'
+import { useState } from 'react'
 import ImageGallery from '@/components/ImageGallery'
 import ContactButton from '@/components/ContactButton'
 import styles from './page.module.css'
 import { useLocale } from 'next-intl'
+import produtosPt from '@/data/produtos.json'
+import produtosEn from '@/data/produtos.en.json'
+
+type Category = {
+  id: string
+  title: string
+  description: string
+  specifications: string[]
+  images: string[]
+  captions: { [key: string]: string }
+  firstImageIndex?: number
+}
+
+function buildCategories(produtosData: typeof produtosPt): Category[] {
+  const categoriasData = (produtosData.oleo as any)?.['transformadores-de-forca']?.categorias || {}
+  return Object.keys(categoriasData).map((key) => {
+    const categoria = categoriasData[key] as any
+    return {
+      id: key,
+      title: categoria.title,
+      description: categoria.description,
+      specifications: categoria.specifications || [],
+      images: categoria.images?.length
+        ? categoria.images
+        : categoria.image ? [categoria.image] : [],
+      captions: categoria.captions || {},
+      firstImageIndex: categoria.firstImageIndex ?? 0,
+    }
+  })
+}
 
 export default function TransformadoresDeForcaPage() {
   const locale = useLocale()
   const isEn = locale === 'en'
-  const [forceTransformerCategories, setForceTransformerCategories] = useState<Array<{
-    id: string
-    title: string
-    description: string
-    specifications: string[]
-    images: string[]
-    captions: { [key: string]: string }
-    firstImageIndex?: number
-  }>>([])
-  const [selectedCategory, setSelectedCategory] = useState<{
-    id: string
-    title: string
-    description: string
-    specifications: string[]
-    images: string[]
-    captions: { [key: string]: string }
-    firstImageIndex?: number
-  } | null>(null)
-  const [loading, setLoading] = useState(true)
 
-  useEffect(() => {
-    // Carregar dados do JSON dinamicamente apenas no cliente
-    if (typeof window === 'undefined') return
-    
-    const loadData = async () => {
-      try {
-        const response = await fetch('/api/admin/produtos', { cache: 'no-store' })
-        if (response.ok) {
-          const produtosData = await response.json()
-          const categoriasData = produtosData.oleo?.['transformadores-de-forca']?.categorias || {}
-          
-          // Converter para formato compatível com o componente
-          const categories = Object.keys(categoriasData).map((key) => {
-            const categoria = categoriasData[key as keyof typeof categoriasData] as any
-            return {
-              id: key,
-              title: categoria.title,
-              description: categoria.description,
-              specifications: categoria.specifications || [],
-              images: categoria.images?.length
-                ? categoria.images
-                : categoria.image ? [categoria.image] : [],
-              captions: categoria.captions || {},
-              firstImageIndex:
-                categoria.firstImageIndex !== undefined
-                  ? categoria.firstImageIndex
-                  : 0,
-            }
-          })
-          
-          setForceTransformerCategories(categories)
-          if (categories.length > 0) {
-            setSelectedCategory(categories[0])
-          }
-        }
-      } catch (error) {
-        console.error('Erro ao carregar dados:', error)
-        // Fallback para dados estáticos se a API falhar
-        import('@/data/produtos.json').then((module) => {
-          const produtosData = module.default
-          const categoriasData = produtosData.oleo?.['transformadores-de-forca']?.categorias || {}
-          const categories = Object.keys(categoriasData).map((key) => {
-            const categoria = categoriasData[key as keyof typeof categoriasData] as any
-            return {
-              id: key,
-              title: categoria.title,
-              description: categoria.description,
-              specifications: categoria.specifications || [],
-              images: categoria.images?.length
-                ? categoria.images
-                : categoria.image ? [categoria.image] : [],
-              captions: categoria.captions || {},
-              firstImageIndex:
-                categoria.firstImageIndex !== undefined
-                  ? categoria.firstImageIndex
-                  : 0,
-            }
-          })
-          setForceTransformerCategories(categories)
-          if (categories.length > 0) {
-            setSelectedCategory(categories[0])
-          }
-        })
-      } finally {
-        setLoading(false)
-      }
-    }
-    
-    loadData()
-  }, [])
+  const categories = buildCategories(isEn ? (produtosEn as typeof produtosPt) : produtosPt)
 
-  if (loading) {
-    return (
-      <section className={styles.page}>
-        <div className="container">
-          <h1>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h1>
-          <p>{isEn ? 'Loading...' : 'Carregando...'}</p>
-        </div>
-      </section>
-    )
-  }
+  const [selectedCategory, setSelectedCategory] = useState<Category | null>(
+    categories.length > 0 ? categories[0] : null
+  )
 
-  if (forceTransformerCategories.length === 0) {
+  if (categories.length === 0) {
     return (
       <section className={styles.page}>
         <div className="container">
@@ -132,7 +66,7 @@ export default function TransformadoresDeForcaPage() {
           <div className={styles.categorySidebar}>
             <h2>{isEn ? 'Categories' : 'Categorias'}</h2>
             <nav className={styles.categoryNav}>
-              {forceTransformerCategories.map((category) => (
+              {categories.map((category) => (
                 <button
                   key={category.id}
                   className={`${styles.categoryItem} ${
@@ -146,15 +80,14 @@ export default function TransformadoresDeForcaPage() {
             </nav>
           </div>
 
-          {/* Conteúdo principal */}
           {selectedCategory ? (
             <div className={styles.categoryDetail}>
               <h2 className={styles.categoryTitle}>{selectedCategory.title}</h2>
-              
+
               {selectedCategory.images.length > 0 && (
                 <div className={styles.galleryWrapper}>
-                  <ImageGallery 
-                    images={selectedCategory.images} 
+                  <ImageGallery
+                    images={selectedCategory.images}
                     alt={selectedCategory.title}
                     captions={selectedCategory.captions}
                     firstImageIndex={selectedCategory.firstImageIndex}

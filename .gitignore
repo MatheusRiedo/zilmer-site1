@@ -42,3 +42,6 @@ next-env.d.ts
 
 /public/images/clientes/**
 
+# PDFs served from S3
+/public/catalogos/*.pdf
+/public/images/certificados/*.pdf

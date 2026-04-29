@@ -10,7 +10,7 @@ import { getLocale } from 'next-intl/server'
 // Adicione aqui os nomes dos arquivos de imagens dos clientes
 // Coloque as imagens na pasta: public/images/clientes/
 const clientes = [
-  'logo-clientes-1.png',
+  'logo-clientes-1.jpg',
 ]
 
 // Helper para renderizar texto com ou sem HTML

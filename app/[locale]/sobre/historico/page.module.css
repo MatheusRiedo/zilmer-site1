@@ -22,6 +22,32 @@
   text-align: justify;
 }
 
+.historicPhotoSection {
+  max-width: 900px;
+  margin: 60px auto 0;
+  padding: 0;
+  border: none;
+}
+
+.historicImage {
+  width: 100%;
+  height: auto;
+  display: block;
+  filter: sepia(0.55) contrast(1.08) brightness(0.92);
+  border-radius: 3px;
+}
+
+.historicCaption {
+  margin-top: 14px;
+  font-size: 0.78rem;
+  color: var(--text-light, #999);
+  font-style: italic;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  text-align: center;
+  opacity: 0.8;
+}
+
 
 
 

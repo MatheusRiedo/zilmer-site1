@@ -1,3 +1,4 @@
+import Image from 'next/image'
 import styles from './page.module.css'
 // @ts-ignore
 import sobreDataPt from '@/data/sobre.json'
@@ -35,6 +36,17 @@ export default async function HistoricoPage() {
           <h2>{sobreData.historico.subtitle}</h2>
           {renderText(sobreData.historico.content)}
         </div>
+
+        <figure className={styles.historicPhotoSection}>
+          <Image
+            src="/images/sobre/historico.jpg"
+            alt="Zilmer - Acervo Histórico"
+            width={1200}
+            height={800}
+            className={styles.historicImage}
+          />
+          <figcaption className={styles.historicCaption}>Zilmer — Acervo Histórico</figcaption>
+        </figure>
       </div>
     </section>
   )

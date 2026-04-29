@@ -39,7 +39,7 @@ export default async function HistoricoPage() {
 
         <figure className={styles.historicPhotoSection}>
           <Image
-            src="/images/sobre/historico.png"
+            src="/images/sobre/historico.jpg"
             alt="Zilmer - Acervo Histórico"
             width={1085}
             height={1450}

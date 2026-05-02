@@ -4,6 +4,8 @@ import styles from './page.module.css'
 import { cdnUrl } from '@/lib/assets'
 import produtosDataPt from '@/data/produtos.json'
 import produtosDataEn from '@/data/produtos.en.json'
+// @ts-ignore
+import produtosDataEs from '@/data/produtos.es.json'
 import { unstable_noStore as noStore } from 'next/cache'
 import { getLocale } from 'next-intl/server'
 
@@ -14,7 +16,7 @@ export const revalidate = 0
 export default async function TransformadoresOleoPage() {
   noStore()
   const locale = await getLocale()
-  const produtosData = locale === 'en' ? produtosDataEn : produtosDataPt
+  const produtosData = locale === 'en' ? produtosDataEn : locale === 'es' ? (produtosDataEs as typeof produtosDataPt) : produtosDataPt
   const isEn = locale === 'en'
   const produtos = produtosData.oleo?.produtos || {}
   
@@ -53,12 +55,12 @@ export default async function TransformadoresOleoPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <h1>{isEn ? 'Oil-Immersed Transformers' : 'Transformadores Imersos em Óleo'}</h1>
+        <h1>{locale === 'en' ? 'Oil-Immersed Transformers' : locale === 'es' ? 'Transformadores Inmersos en Aceite' : 'Transformadores Imersos em Óleo'}</h1>
         <div className={styles.content}>
           <div className={styles.intro}>
             <p>
               {(produtosData.oleo?.intro?.description as string) ||
-                (isEn ? 'Oil-immersed transformers are essential equipment for high-power electrical systems, offering excellent thermal dissipation and dielectric rigidity. Our transformers are designed to serve the most diverse industrial applications with maximum reliability and efficiency.' : 'Transformadores imersos em óleo são equipamentos essenciais para sistemas elétricos de alta potência, oferecendo excelente dissipação térmica e rigidez dielétrica. Nossos transformadores são projetados para atender as mais diversas aplicações industriais com máxima confiabilidade e eficiência.')}
+                (locale === 'en' ? 'Oil-immersed transformers are essential equipment for high-power electrical systems, offering excellent thermal dissipation and dielectric rigidity. Our transformers are designed to serve the most diverse industrial applications with maximum reliability and efficiency.' : locale === 'es' ? 'Los transformadores inmersos en aceite son equipos esenciales para sistemas eléctricos de alta potencia, que ofrecen excelente disipación térmica y rigidez dieléctrica. Nuestros transformadores están diseñados para atender las más diversas aplicaciones industriales con máxima confiabilidad y eficiencia.' : 'Transformadores imersos em óleo são equipamentos essenciais para sistemas elétricos de alta potência, oferecendo excelente dissipação térmica e rigidez dielétrica. Nossos transformadores são projetados para atender as mais diversas aplicações industriais com máxima confiabilidade e eficiência.')}
             </p>
           </div>
 
@@ -80,8 +82,8 @@ export default async function TransformadoresOleoPage() {
                   </div>
                 ) : null
               })()}
-              <h3>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h3>
-              <p>15{isEn ? ' to' : ' a'} 72 kV {isEn ? 'up to' : 'até'} 20 MVA</p>
+              <h3>{locale === 'en' ? 'Power Transformers' : locale === 'es' ? 'Transformadores de Fuerza' : 'Transformadores de Força'}</h3>
+              <p>15{locale === 'en' ? ' to' : locale === 'es' ? ' a' : ' a'} 72 kV {locale === 'en' ? 'up to' : locale === 'es' ? 'hasta' : 'até'} 20 MVA</p>
             </Link>
             <Link href="/produtos/transformadores-oleo/transformadores-auxiliares" className={styles.featuredCard}>
               {(() => {
@@ -100,8 +102,8 @@ export default async function TransformadoresOleoPage() {
                   </div>
                 ) : null
               })()}
-              <h3>{isEn ? 'Auxiliary Transformers' : 'Transformadores Auxiliares'}</h3>
-              <p>5 kVA {isEn ? 'up to' : 'até'} 500 kVA</p>
+              <h3>{locale === 'en' ? 'Auxiliary Transformers' : locale === 'es' ? 'Transformadores Auxiliares' : 'Transformadores Auxiliares'}</h3>
+              <p>5 kVA {locale === 'en' ? 'up to' : locale === 'es' ? 'hasta' : 'até'} 500 kVA</p>
             </Link>
           </div>
 

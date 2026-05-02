@@ -4,6 +4,7 @@ import { join } from 'path'
 
 const NOTICIAS_PATH = join(process.cwd(), 'data', 'noticias.json')
 const NOTICIAS_EN_PATH = join(process.cwd(), 'data', 'noticias.en.json')
+const NOTICIAS_ES_PATH = join(process.cwd(), 'data', 'noticias.es.json')
 
 function stripHtml(value: unknown): unknown {
   if (typeof value === 'string') {
@@ -13,7 +14,7 @@ function stripHtml(value: unknown): unknown {
 }
 
 async function loadNoticias(locale?: string) {
-  const filePath = locale === 'en' ? NOTICIAS_EN_PATH : NOTICIAS_PATH
+  const filePath = locale === 'en' ? NOTICIAS_EN_PATH : locale === 'es' ? NOTICIAS_ES_PATH : NOTICIAS_PATH
   const file = await readFile(filePath, 'utf-8')
   return JSON.parse(file)
 }

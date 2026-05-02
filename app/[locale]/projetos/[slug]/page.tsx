@@ -59,6 +59,48 @@ const noticiasPt: Noticia[] = [
   },
 ]
 
+const noticiasEs: Noticia[] = [
+  {
+    id: '1',
+    title: 'Proyecto en Operación – Hidroeléctrica',
+    description: 'Los transformadores de fuerza para un sistema de generación de energía hidroeléctrica continúan operando con máxima eficiencia y confiabilidad.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-hidreletrica',
+    content: `
+      <p>Nuestros transformadores de fuerza instalados en la central hidroeléctrica continúan operando con excelencia, garantizando el suministro estable de energía eléctrica a la región.</p>
+      <p>El proyecto, implementado hace dos años, demuestra la robustez y confiabilidad de nuestros equipos en condiciones de operación continua. Los transformadores fueron diseñados específicamente para satisfacer las demandas de alta potencia del sistema de generación.</p>
+      <p>Con monitoreo constante y mantenimiento preventivo, los equipos mantienen sus parámetros de rendimiento dentro de las especificaciones técnicas, garantizando eficiencia energética y seguridad operacional.</p>
+    `,
+    date: '2024-01-15',
+  },
+  {
+    id: '2',
+    title: 'Nuevo Proyecto Aplicado – Subestación Industrial',
+    description: 'Solución integral en transformadores para una subestación de gran envergadura recientemente instalada y en fase de puesta en servicio.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-subestacao',
+    content: `
+      <p>Acabamos de concluir la instalación de una solución integral en transformadores para una subestación industrial de gran envergadura. El proyecto representa un hito importante en la expansión de la infraestructura eléctrica de la región.</p>
+      <p>Los transformadores fueron adaptados para satisfacer los requisitos específicos del cliente, incluyendo exigencias de alta tensión y capacidad de carga. La instalación fue realizada por nuestro equipo técnico especializado, siguiendo rigurosos protocolos de seguridad.</p>
+      <p>Actualmente, los equipos se encuentran en fase de pruebas y puesta en servicio, con previsión de entrada en operación comercial en las próximas semanas.</p>
+    `,
+    date: '2024-02-20',
+  },
+  {
+    id: '3',
+    title: 'Proyecto en Operación – Minería',
+    description: 'Transformadores robustos para operación en entorno minero, manteniendo alto rendimiento y durabilidad.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-mineracao',
+    content: `
+      <p>Nuestros transformadores instalados en operaciones mineras continúan demostrando su capacidad para resistir condiciones de operación extremas. Diseñados específicamente para entornos industriales exigentes, los equipos mantienen alto rendimiento incluso bajo condiciones severas.</p>
+      <p>La robustez de los transformadores es esencial en este tipo de aplicación, donde la confiabilidad es crítica para mantener la producción. Nuestros equipos han sido probados y aprobados para operación en entornos con alta humedad, variaciones de temperatura y exposición a partículas.</p>
+      <p>El proyecto ha sido un éxito, con los transformadores operando sin interrupciones y manteniendo todos los parámetros dentro de las especificaciones técnicas.</p>
+    `,
+    date: '2024-01-10',
+  },
+]
+
 const noticiasEn: Noticia[] = [
   {
     id: '1',
@@ -105,7 +147,7 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
   const { slug } = use(params)
   const locale = useLocale()
   const isEn = locale === 'en'
-  const noticias = isEn ? noticiasEn : noticiasPt
+  const noticias = locale === 'en' ? noticiasEn : locale === 'es' ? noticiasEs : noticiasPt
   const noticia = noticias.find((n) => n.slug === slug)
 
   if (!noticia) {
@@ -113,11 +155,11 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
       <section className={styles.page}>
         <div className="container">
           <Link href="/" className={styles.backLink}>
-            {isEn ? '← Back to Home' : '← Voltar para Home'}
+            {locale === 'en' ? '← Back to Home' : locale === 'es' ? '← Volver al inicio' : '← Voltar para Home'}
           </Link>
           <div className={styles.article}>
-            <h1 className={styles.title}>{isEn ? 'Article not found' : 'Notícia não encontrada'}</h1>
-            <p>{isEn ? 'The article you are looking for does not exist.' : 'A notícia que você está procurando não existe.'}</p>
+            <h1 className={styles.title}>{locale === 'en' ? 'Article not found' : locale === 'es' ? 'Artículo no encontrado' : 'Notícia não encontrada'}</h1>
+            <p>{locale === 'en' ? 'The article you are looking for does not exist.' : locale === 'es' ? 'El artículo que busca no existe.' : 'A notícia que você está procurando não existe.'}</p>
           </div>
         </div>
       </section>
@@ -126,7 +168,7 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
 
   const formatDate = (dateString: string) => {
     const date = new Date(dateString)
-    return date.toLocaleDateString(isEn ? 'en-GB' : 'pt-BR', {
+    return date.toLocaleDateString(locale === 'en' ? 'en-GB' : locale === 'es' ? 'es-ES' : 'pt-BR', {
       day: '2-digit',
       month: 'long',
       year: 'numeric',
@@ -137,7 +179,7 @@ export default function NoticiaPage({ params }: { params: Promise<{ slug: string
     <section className={styles.page}>
       <div className="container">
         <Link href="/" className={styles.backLink}>
-          {isEn ? '← Back to Home' : '← Voltar para Home'}
+          {locale === 'en' ? '← Back to Home' : locale === 'es' ? '← Volver al inicio' : '← Voltar para Home'}
         </Link>
 
         <article className={styles.article}>

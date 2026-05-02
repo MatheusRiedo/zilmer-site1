@@ -7,6 +7,8 @@ import { Link } from '@/i18n/routing'
 import styles from './page.module.css'
 import areasDataPtJson from '@/data/areas.json'
 import areasDataEnJson from '@/data/areas.en.json'
+// @ts-ignore
+import areasDataEsJson from '@/data/areas.es.json'
 import { useLocale } from 'next-intl'
 import { cdnUrl } from '@/lib/assets'
 
@@ -60,7 +62,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
   console.log('[AreaPage] NEXT_PUBLIC_CDN_URL =', process.env.NEXT_PUBLIC_CDN_URL)
   const locale = useLocale()
   const isEn = locale === 'en'
-  const areasData = (isEn ? areasDataEnJson : areasDataPtJson) as AreasDataType
+  const areasData = (locale === 'en' ? areasDataEnJson : locale === 'es' ? areasDataEsJson : areasDataPtJson) as AreasDataType
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
 
   if (!params?.slug) {
@@ -114,12 +116,12 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
         </div>
         
         {/* Setas de navegação */}
-        <Link href={`/areas/${prevSlug}`} className={styles.heroNavArrow} style={{ left: '20px' }} aria-label={isEn ? `Go to ${prevArea.title}` : `Ir para ${prevArea.title}`}>
+        <Link href={`/areas/${prevSlug}`} className={styles.heroNavArrow} style={{ left: '20px' }} aria-label={locale === 'en' ? `Go to ${prevArea.title}` : locale === 'es' ? `Ir a ${prevArea.title}` : `Ir para ${prevArea.title}`}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="15 18 9 12 15 6"></polyline>
           </svg>
         </Link>
-        <Link href={`/areas/${nextSlug}`} className={styles.heroNavArrow} style={{ right: '20px' }} aria-label={isEn ? `Go to ${nextArea.title}` : `Ir para ${nextArea.title}`}>
+        <Link href={`/areas/${nextSlug}`} className={styles.heroNavArrow} style={{ right: '20px' }} aria-label={locale === 'en' ? `Go to ${nextArea.title}` : locale === 'es' ? `Ir a ${nextArea.title}` : `Ir para ${nextArea.title}`}>
           <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
             <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
@@ -157,7 +159,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
                     <button
                       className={styles.carouselArrowLeft}
                       onClick={prevImage}
-                      aria-label={isEn ? 'Previous image' : 'Imagem anterior'}
+                      aria-label={locale === 'en' ? 'Previous image' : locale === 'es' ? 'Imagen anterior' : 'Imagem anterior'}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <polyline points="15 18 9 12 15 6"></polyline>
@@ -166,7 +168,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
                     <button
                       className={styles.carouselArrowRight}
                       onClick={nextImage}
-                      aria-label={isEn ? 'Next image' : 'Próxima imagem'}
+                      aria-label={locale === 'en' ? 'Next image' : locale === 'es' ? 'Imagen siguiente' : 'Próxima imagem'}
                     >
                       <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
                         <polyline points="9 18 15 12 9 6"></polyline>
@@ -178,7 +180,7 @@ export default function AreaPage({ params }: { params: { slug: string } }) {
                           key={index}
                           className={`${styles.carouselDot} ${currentImageIndex === index ? styles.active : ''}`}
                           onClick={() => setCurrentImageIndex(index)}
-                          aria-label={isEn ? `Go to image ${index + 1}` : `Ir para imagem ${index + 1}`}
+                          aria-label={locale === 'en' ? `Go to image ${index + 1}` : locale === 'es' ? `Ir a imagen ${index + 1}` : `Ir para imagem ${index + 1}`}
                         />
                       ))}
                     </div>

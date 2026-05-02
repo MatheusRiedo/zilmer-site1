@@ -5,6 +5,8 @@ import { cdnUrl } from '@/lib/assets'
 import sobreDataPt from '@/data/sobre.json'
 // @ts-ignore
 import sobreDataEn from '@/data/sobre.en.json'
+// @ts-ignore
+import sobreDataEs from '@/data/sobre.es.json'
 import { getLocale } from 'next-intl/server'
 
 // Adicione aqui os nomes dos arquivos de imagens dos certificados
@@ -44,10 +46,10 @@ function renderText(text: string | undefined | null) {
 
 export default async function CertificadosPage() {
   const locale = await getLocale()
-  const sobreData = (locale === 'en' ? sobreDataEn : sobreDataPt) as {
+  const sobreData = (locale === 'en' ? sobreDataEn : locale === 'es' ? sobreDataEs : sobreDataPt) as {
     certificados: { title: string; description: string }
   }
-  const openPdfLabel = locale === 'en' ? 'Open PDF' : 'Abrir PDF'
+  const openPdfLabel = locale === 'en' ? 'Open PDF' : locale === 'es' ? 'Abrir PDF' : 'Abrir PDF'
   return (
     <section className={styles.page}>
       <div className="container">

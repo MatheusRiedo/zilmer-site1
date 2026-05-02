@@ -4,6 +4,8 @@ import ContactButton from '@/components/ContactButton'
 import styles from './detail.module.css'
 import produtosDataPt from '@/data/produtos.json'
 import produtosDataEn from '@/data/produtos.en.json'
+// @ts-ignore
+import produtosDataEs from '@/data/produtos.es.json'
 import { unstable_noStore as noStore } from 'next/cache'
 import { getLocale } from 'next-intl/server'
 
@@ -15,7 +17,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
   const { slug } = await params
   noStore()
   const locale = await getLocale()
-  const produtosData = locale === 'en' ? produtosDataEn : produtosDataPt
+  const produtosData = locale === 'en' ? produtosDataEn : locale === 'es' ? (produtosDataEs as typeof produtosDataPt) : produtosDataPt
   const isEn = locale === 'en'
   // Mapear slugs para chaves do JSON
   const slugToKey: { [key: string]: string } = {
@@ -65,7 +67,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
           <div className={styles.infoSection}>
             {produto.longDescription && (
               <div className={styles.description}>
-                <h2>{isEn ? 'Description' : 'Descrição'}</h2>
+                <h2>{locale === 'en' ? 'Description' : locale === 'es' ? 'Descripción' : 'Descrição'}</h2>
                 <p>{produto.longDescription}</p>
               </div>
             )}

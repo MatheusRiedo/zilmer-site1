@@ -15,7 +15,7 @@ export const revalidate = 0
 function getProdutosData(locale: string) {
   noStore()
   try {
-    const fileName = locale === 'en' ? 'produtos.en.json' : 'produtos.json'
+    const fileName = locale === 'en' ? 'produtos.en.json' : locale === 'es' ? 'produtos.es.json' : 'produtos.json'
     const filePath = join(process.cwd(), 'data', fileName)
     const fileContents = readFileSync(filePath, 'utf8')
     return JSON.parse(fileContents)
@@ -63,12 +63,12 @@ export default async function TransformadoresSecoPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <h1>{isEn ? 'Dry-Type Transformers' : 'Transformadores a Seco'}</h1>
+        <h1>{locale === 'en' ? 'Dry-Type Transformers' : locale === 'es' ? 'Transformadores Tipo Seco' : 'Transformadores a Seco'}</h1>
         <div className={styles.content}>
           <div className={styles.intro}>
             <p>
               {getProdutosData(locale).seco?.intro?.description ||
-                (isEn ? 'Epoxy resin cast dry-type transformers are the ideal solution for applications requiring safety, low maintenance and indoor installation. Our transformers offer high reliability and superior performance across diverse industrial applications.' : 'Transformadores a seco moldados em resina epóxi são a solução ideal para aplicações que exigem segurança, baixa manutenção e instalação em ambientes internos. Nossos transformadores oferecem alta confiabilidade e desempenho superior em diversas aplicações industriais.')}
+                (locale === 'en' ? 'Epoxy resin cast dry-type transformers are the ideal solution for applications requiring safety, low maintenance and indoor installation. Our transformers offer high reliability and superior performance across diverse industrial applications.' : locale === 'es' ? 'Los transformadores tipo seco moldeados en resina epoxi son la solución ideal para aplicaciones que exigen seguridad, bajo mantenimiento e instalación en ambientes interiores. Nuestros transformadores ofrecen alta confiabilidad y desempeño superior en diversas aplicaciones industriales.' : 'Transformadores a seco moldados em resina epóxi são a solução ideal para aplicações que exigem segurança, baixa manutenção e instalação em ambientes internos. Nossos transformadores oferecem alta confiabilidade e desempenho superior em diversas aplicações industriais.')}
             </p>
           </div>
 
@@ -93,8 +93,8 @@ export default async function TransformadoresSecoPage() {
                   </div>
                 ) : null
               })()}
-              <h3>{isEn ? 'Medium-Voltage Transformers' : 'Transformadores de Média Tensão'}</h3>
-              <p>15{isEn ? ' to' : ' a'} 36 kV {isEn ? 'up to' : 'até'} 20 MVA</p>
+              <h3>{locale === 'en' ? 'Medium-Voltage Transformers' : locale === 'es' ? 'Transformadores de Media Tensión' : 'Transformadores de Média Tensão'}</h3>
+              <p>15{locale === 'en' ? ' to' : locale === 'es' ? ' a' : ' a'} 36 kV {locale === 'en' ? 'up to' : locale === 'es' ? 'hasta' : 'até'} 20 MVA</p>
             </Link>
           </div>
 

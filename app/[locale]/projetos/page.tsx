@@ -54,19 +54,45 @@ const projetosEn = [
   },
 ]
 
+const projetosEs = [
+  {
+    id: '1',
+    title: 'Proyecto en Operación – Hidroeléctrica',
+    description: 'Los transformadores de fuerza para un sistema de generación de energía hidroeléctrica continúan operando con máxima eficiencia y confiabilidad.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-hidreletrica',
+  },
+  {
+    id: '2',
+    title: 'Nuevo Proyecto Aplicado – Subestación Industrial',
+    description: 'Solución integral en transformadores para una subestación de gran envergadura recientemente instalada y en fase de puesta en servicio.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-subestacao',
+  },
+  {
+    id: '3',
+    title: 'Proyecto en Operación – Minería',
+    description: 'Transformadores robustos para operación en entorno minero, manteniendo alto rendimiento y durabilidad.',
+    image: '/images/projetos/projeto-1.jpeg',
+    slug: 'projeto-mineracao',
+  },
+]
+
 export default function ProjetosPage() {
   const locale = useLocale()
   const isEn = locale === 'en'
-  const projetos = isEn ? projetosEn : projetosPt
+  const projetos = locale === 'en' ? projetosEn : locale === 'es' ? projetosEs : projetosPt
 
   return (
     <section className={styles.page}>
       <div className="container">
         <div className={styles.header}>
-          <h1 className={styles.title}>{isEn ? 'Projects' : 'Projetos'}</h1>
+          <h1 className={styles.title}>{locale === 'en' ? 'Projects' : locale === 'es' ? 'Proyectos' : 'Projetos'}</h1>
           <p className={styles.subtitle}>
-            {isEn
+            {locale === 'en'
               ? 'Follow our projects in operation and the latest news on recent installations.'
+              : locale === 'es'
+              ? 'Conozca nuestros proyectos en operación y las novedades sobre instalaciones recientes.'
               : 'Acompanhe nossos projetos em operação e as novidades sobre instalações recentes.'}
           </p>
         </div>
@@ -87,7 +113,7 @@ export default function ProjetosPage() {
                 <div className={styles.cardContent}>
                   <h2 className={styles.cardTitle}>{projeto.title}</h2>
                   <p className={styles.cardDescription}>{projeto.description}</p>
-                  <span className={styles.readMore}>{isEn ? 'Read more →' : 'Leia mais →'}</span>
+                  <span className={styles.readMore}>{locale === 'en' ? 'Read more →' : locale === 'es' ? 'Leer más →' : 'Leia mais →'}</span>
                 </div>
               </Link>
             </article>

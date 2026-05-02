@@ -5,6 +5,8 @@ import styles from './detail.module.css'
 import { cdnUrl } from '@/lib/assets'
 import produtosDataPt from '@/data/produtos.json'
 import produtosDataEn from '@/data/produtos.en.json'
+// @ts-ignore
+import produtosDataEs from '@/data/produtos.es.json'
 import { unstable_noStore as noStore } from 'next/cache'
 import { getLocale } from 'next-intl/server'
 
@@ -16,7 +18,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
   const { slug } = await params
   noStore()
   const locale = await getLocale()
-  const produtosData = locale === 'en' ? produtosDataEn : produtosDataPt
+  const produtosData = locale === 'en' ? produtosDataEn : locale === 'es' ? (produtosDataEs as typeof produtosDataPt) : produtosDataPt
   const isEn = locale === 'en'
   // Mapear slugs para chaves do JSON
   const slugToKey: { [key: string]: string } = {
@@ -65,7 +67,7 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
           <div className={styles.infoSection}>
             {produto.longDescription && (
               <div className={styles.description}>
-                <h2>{isEn ? 'Description' : 'Descrição'}</h2>
+                <h2>{locale === 'en' ? 'Description' : locale === 'es' ? 'Descripción' : 'Descrição'}</h2>
                 <p>{produto.longDescription}</p>
               </div>
             )}
@@ -79,9 +81,9 @@ export default async function ProductDetail({ params }: { params: Promise<{ slug
                 <div className={styles.pdfCard}>
                   <div className={styles.pdfIcon}>📄</div>
                   <div className={styles.pdfInfo}>
-                    <h3 className={styles.pdfTitle}>{isEn ? 'TAI and TCI Catalogue' : 'Catálogo TAI e TCI'}</h3>
+                    <h3 className={styles.pdfTitle}>{locale === 'en' ? 'TAI and TCI Catalogue' : locale === 'es' ? 'Catálogo TAI y TCI' : 'Catálogo TAI e TCI'}</h3>
                     <p className={styles.pdfDescription}>
-                      {isEn ? 'Technical specifications and Indicative Dimensional Drawing' : 'Especificações técnicas e Desenho Dimensional Orientativo'}
+                      {locale === 'en' ? 'Technical specifications and Indicative Dimensional Drawing' : locale === 'es' ? 'Especificaciones técnicas y Plano Dimensional Orientativo' : 'Especificações técnicas e Desenho Dimensional Orientativo'}
                     </p>
                   </div>
                   <a

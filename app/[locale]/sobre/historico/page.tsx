@@ -4,6 +4,8 @@ import styles from './page.module.css'
 import sobreDataPt from '@/data/sobre.json'
 // @ts-ignore
 import sobreDataEn from '@/data/sobre.en.json'
+// @ts-ignore
+import sobreDataEs from '@/data/sobre.es.json'
 import { getLocale } from 'next-intl/server'
 
 function stripHtml(text: string): string {
@@ -25,7 +27,7 @@ function renderText(text: string | undefined | null) {
 
 export default async function HistoricoPage() {
   const locale = await getLocale()
-  const sobreData = (locale === 'en' ? sobreDataEn : sobreDataPt) as {
+  const sobreData = (locale === 'en' ? sobreDataEn : locale === 'es' ? sobreDataEs : sobreDataPt) as {
     historico: { title: string; subtitle: string; content: string }
   }
   return (

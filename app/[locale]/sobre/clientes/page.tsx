@@ -5,6 +5,8 @@ import { cdnUrl } from '@/lib/assets'
 import sobreDataPt from '@/data/sobre.json'
 // @ts-ignore
 import sobreDataEn from '@/data/sobre.en.json'
+// @ts-ignore
+import sobreDataEs from '@/data/sobre.es.json'
 import { getLocale } from 'next-intl/server'
 
 // Adicione aqui os nomes dos arquivos de imagens dos clientes
@@ -28,7 +30,7 @@ function renderText(text: string | undefined | null) {
 
 export default async function ClientesPage() {
   const locale = await getLocale()
-  const sobreData = (locale === 'en' ? sobreDataEn : sobreDataPt) as {
+  const sobreData = (locale === 'en' ? sobreDataEn : locale === 'es' ? sobreDataEs : sobreDataPt) as {
     clientes: { title: string; description: string }
   }
   return (

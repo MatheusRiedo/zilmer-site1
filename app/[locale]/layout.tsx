@@ -28,6 +28,8 @@ export async function generateMetadata({
       : 'Zilmer Transformadores',
     description: locale === 'en'
       ? 'High-quality transformers - Oil-immersed transformers, dry-type transformers and instrument transformers'
+      : locale === 'es'
+      ? 'Transformadores de alta calidad - Transformadores inmersos en aceite, transformadores tipo seco y transformadores para instrumentos'
       : 'Transformadores de alta qualidade - Transformadores imersos em óleo, transformadores a seco e transformadores para instrumentos',
     icons: {
       icon: '/favicon.png',

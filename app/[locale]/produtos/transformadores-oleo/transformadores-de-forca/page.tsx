@@ -7,6 +7,8 @@ import styles from './page.module.css'
 import { useLocale } from 'next-intl'
 import produtosPt from '@/data/produtos.json'
 import produtosEn from '@/data/produtos.en.json'
+// @ts-ignore
+import produtosEs from '@/data/produtos.es.json'
 
 type Category = {
   id: string
@@ -40,7 +42,7 @@ export default function TransformadoresDeForcaPage() {
   const locale = useLocale()
   const isEn = locale === 'en'
 
-  const categories = buildCategories(isEn ? (produtosEn as typeof produtosPt) : produtosPt)
+  const categories = buildCategories(locale === 'en' ? (produtosEn as typeof produtosPt) : locale === 'es' ? (produtosEs as typeof produtosPt) : produtosPt)
 
   const [selectedCategory, setSelectedCategory] = useState<Category | null>(
     categories.length > 0 ? categories[0] : null
@@ -50,8 +52,8 @@ export default function TransformadoresDeForcaPage() {
     return (
       <section className={styles.page}>
         <div className="container">
-          <h1>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h1>
-          <p>{isEn ? 'No categories available.' : 'Nenhuma categoria disponível.'}</p>
+          <h1>{locale === 'en' ? 'Power Transformers' : locale === 'es' ? 'Transformadores de Fuerza' : 'Transformadores de Força'}</h1>
+          <p>{locale === 'en' ? 'No categories available.' : locale === 'es' ? 'No hay categorías disponibles.' : 'Nenhuma categoria disponível.'}</p>
         </div>
       </section>
     )
@@ -60,11 +62,11 @@ export default function TransformadoresDeForcaPage() {
   return (
     <section className={styles.page}>
       <div className="container">
-        <h1>{isEn ? 'Power Transformers' : 'Transformadores de Força'}</h1>
+        <h1>{locale === 'en' ? 'Power Transformers' : locale === 'es' ? 'Transformadores de Fuerza' : 'Transformadores de Força'}</h1>
 
         <div className={styles.forcePageContent}>
           <div className={styles.categorySidebar}>
-            <h2>{isEn ? 'Categories' : 'Categorias'}</h2>
+            <h2>{locale === 'en' ? 'Categories' : locale === 'es' ? 'Categorías' : 'Categorias'}</h2>
             <nav className={styles.categoryNav}>
               {categories.map((category) => (
                 <button
@@ -100,7 +102,7 @@ export default function TransformadoresDeForcaPage() {
               </div>
 
               <div className={styles.specifications}>
-                <h3>{isEn ? 'Technical Specifications' : 'Especificações Técnicas'}</h3>
+                <h3>{locale === 'en' ? 'Technical Specifications' : locale === 'es' ? 'Especificaciones Técnicas' : 'Especificações Técnicas'}</h3>
                 <ul className={styles.specificationsList}>
                   {selectedCategory.specifications.map((spec, index) => (
                     <li key={index}>{spec}</li>
@@ -114,7 +116,7 @@ export default function TransformadoresDeForcaPage() {
             </div>
           ) : (
             <div className={styles.categoryDetail}>
-              <p>{isEn ? 'Select a category' : 'Selecione uma categoria'}</p>
+              <p>{locale === 'en' ? 'Select a category' : locale === 'es' ? 'Seleccione una categoría' : 'Selecione uma categoria'}</p>
             </div>
           )}
         </div>

@@ -8,6 +8,8 @@ import { useLocale } from 'next-intl'
 import styles from './page.module.css'
 import areasDataJson from '@/data/areas.json'
 import areasDataEnJson from '@/data/areas.en.json'
+// @ts-ignore
+import areasDataEsJson from '@/data/areas.es.json'
 
 const areasData = areasDataJson as {
   [key: string]: {
@@ -60,7 +62,7 @@ export default function AreaSlugPage({
 }) {
   const [currentImageIndex, setCurrentImageIndex] = useState(0)
   const locale = useLocale()
-  const areasData = locale === 'en' ? (areasDataEnJson as typeof areasDataJson) : areasDataJson
+  const areasData = locale === 'en' ? (areasDataEnJson as typeof areasDataJson) : locale === 'es' ? (areasDataEsJson as typeof areasDataJson) : areasDataJson
 
   if (!params?.slug) {
     notFound()
@@ -112,7 +114,7 @@ export default function AreaSlugPage({
           href={`/${prevSlug}`}
           className={styles.heroNavArrow}
           style={{ left: '20px' }}
-          aria-label={`Ir para ${prevArea?.title}`}
+          aria-label={locale === 'en' ? `Go to ${prevArea?.title}` : locale === 'es' ? `Ir a ${prevArea?.title}` : `Ir para ${prevArea?.title}`}
         >
           <svg
             width="32"
@@ -131,7 +133,7 @@ export default function AreaSlugPage({
           href={`/${nextSlug}`}
           className={styles.heroNavArrow}
           style={{ right: '20px' }}
-          aria-label={`Ir para ${nextArea?.title}`}
+          aria-label={locale === 'en' ? `Go to ${nextArea?.title}` : locale === 'es' ? `Ir a ${nextArea?.title}` : `Ir para ${nextArea?.title}`}
         >
           <svg
             width="32"
@@ -181,7 +183,7 @@ export default function AreaSlugPage({
                     <button
                       className={styles.carouselArrowLeft}
                       onClick={prevImage}
-                      aria-label="Imagem anterior"
+                      aria-label={locale === 'en' ? 'Previous image' : locale === 'es' ? 'Imagen anterior' : 'Imagem anterior'}
                     >
                       <svg
                         width="20"
@@ -197,7 +199,7 @@ export default function AreaSlugPage({
                     <button
                       className={styles.carouselArrowRight}
                       onClick={nextImage}
-                      aria-label="Próxima imagem"
+                      aria-label={locale === 'en' ? 'Next image' : locale === 'es' ? 'Imagen siguiente' : 'Próxima imagem'}
                     >
                       <svg
                         width="20"
@@ -218,7 +220,7 @@ export default function AreaSlugPage({
                             currentImageIndex === index ? styles.active : ''
                           }`}
                           onClick={() => setCurrentImageIndex(index)}
-                          aria-label={`Ir para imagem ${index + 1}`}
+                          aria-label={locale === 'en' ? `Go to image ${index + 1}` : locale === 'es' ? `Ir a imagen ${index + 1}` : `Ir para imagem ${index + 1}`}
                         />
                       ))}
                     </div>

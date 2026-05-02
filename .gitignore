@@ -45,3 +45,7 @@ next-env.d.ts
 # PDFs served from S3
 /public/catalogos/*.pdf
 /public/images/certificados/*.pdf
+
+# Images served from S3
+/public/images/areas/**
+/public/images/xray/**

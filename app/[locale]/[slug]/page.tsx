@@ -6,6 +6,7 @@ import Image from 'next/image'
 import { Link } from '@/i18n/routing'
 import { useLocale } from 'next-intl'
 import styles from './page.module.css'
+import { cdnUrl } from '@/lib/assets'
 import areasDataJson from '@/data/areas.json'
 import areasDataEnJson from '@/data/areas.en.json'
 // @ts-ignore
@@ -101,7 +102,7 @@ export default function AreaSlugPage({
       <section className={styles.heroSection}>
         <div className={styles.heroBackground}>
           <Image
-            src={(area.aplicacao as any).heroImage || area.aplicacao.image}
+            src={cdnUrl((area.aplicacao as any).heroImage || area.aplicacao.image)}
             alt={area.title}
             fill
             className={styles.heroImage}
@@ -173,7 +174,7 @@ export default function AreaSlugPage({
             <div className={styles.aplicacaoImage}>
               <div className={styles.imageWrapper}>
                 <Image
-                  src={images[currentImageIndex]}
+                  src={cdnUrl(images[currentImageIndex])}
                   alt={area.aplicacao.title}
                   fill
                   className={styles.contentImage}

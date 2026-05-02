@@ -5,7 +5,6 @@ import { useLocale } from 'next-intl'
 
 export default function HeroIntro() {
   const locale = useLocale()
-  const isEn = locale === 'en'
   return (
     <section className={styles.hero}>
       <div className={styles.background}>
@@ -27,11 +26,11 @@ export default function HeroIntro() {
         <div className={styles.divider} />
 
         <p className={styles.tagline}>
-          {isEn ? 'Power & Instrument Transformers' : 'Transformadores de Potência & Instrumentos'}
+          {locale === 'en' ? 'Power & Instrument Transformers' : locale === 'es' ? 'Transformadores de Potencia & Instrumentos' : 'Transformadores de Potência & Instrumentos'}
         </p>
       </div>
 
-      <a href="#areas" className={styles.scrollCue} aria-label={isEn ? 'Scroll down' : 'Rolar para baixo'}>
+      <a href="#areas" className={styles.scrollCue} aria-label={locale === 'en' ? 'Scroll down' : locale === 'es' ? 'Desplazarse hacia abajo' : 'Rolar para baixo'}>
         <span className={styles.chevron} />
       </a>
     </section>

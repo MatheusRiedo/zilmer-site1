@@ -24,7 +24,6 @@ interface NoticiasData {
 
 export default function ProjetosRecentes() {
   const locale = useLocale()
-  const isEn = locale === 'en'
   const [data, setData] = useState<NoticiasData | null>(null)
 
   useEffect(() => {
@@ -42,7 +41,7 @@ export default function ProjetosRecentes() {
     <section className={styles.projetosSection}>
       <div className="container">
         <div className={styles.header}>
-          <h2 className={styles.title}>{isEn ? 'News' : 'Notícias'}</h2>
+          <h2 className={styles.title}>{locale === 'en' ? 'News' : locale === 'es' ? 'Noticias' : 'Notícias'}</h2>
           <p className={styles.subtitle}>{data.section.subtitle}</p>
         </div>
 

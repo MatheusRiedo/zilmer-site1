@@ -97,11 +97,16 @@
   color: var(--secondary-color);
 }
 
+.langSwitcher {
+  display: flex;
+  gap: 4px;
+}
+
 .langBtn {
   background: transparent;
   border: 1.5px solid var(--primary-color, #0047b2);
   color: var(--primary-color, #0047b2);
-  padding: 5px 12px;
+  padding: 5px 10px;
   border-radius: 4px;
   font-weight: 600;
   font-size: 0.8rem;
@@ -116,13 +121,19 @@
   color: #fff;
 }
 
-.langBtn:disabled {
+.langBtnActive {
+  background: var(--primary-color, #0047b2);
+  color: #fff;
+  cursor: default;
+}
+
+.langBtn:disabled:not(.langBtnActive) {
   opacity: 0.5;
   cursor: not-allowed;
 }
 
 /* In nav (desktop only) */
-.nav .langBtn {
+.nav .langSwitcher {
   display: flex;
 }
 
@@ -154,8 +165,8 @@
     display: flex;
   }
 
-  /* Hide the langBtn inside the collapsed nav on mobile */
-  .nav .langBtn {
+  /* Hide the lang switcher inside the collapsed nav on mobile */
+  .nav .langSwitcher {
     display: none;
   }
 

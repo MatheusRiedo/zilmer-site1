@@ -16,10 +16,8 @@ export default function Header() {
   const router = useRouter()
   const pathname = usePathname()
   const [isPending, startTransition] = useTransition()
-  const isEn = locale === 'en'
 
-  const toggleLanguage = () => {
-    const newLocale = isEn ? 'pt' : 'en'
+  const switchLocale = (newLocale: string) => {
     startTransition(() => {
       router.replace(pathname, { locale: newLocale } as any)
     })
@@ -36,7 +34,7 @@ export default function Header() {
 
         <nav className={`${styles.nav} ${isMenuOpen ? styles.navOpen : ''}`}>
           <Link href="/" onClick={close}>
-            {isEn ? 'HOME' : 'INÍCIO'}
+            {locale === 'en' ? 'HOME' : locale === 'es' ? 'INICIO' : 'INÍCIO'}
           </Link>
 
           <div
@@ -44,22 +42,22 @@ export default function Header() {
             onMouseEnter={() => setIsAboutOpen(true)}
             onMouseLeave={() => setIsAboutOpen(false)}
           >
-            <span>{isEn ? 'ABOUT' : 'SOBRE'}</span>
+            <span>{locale === 'en' ? 'ABOUT' : locale === 'es' ? 'NOSOTROS' : 'SOBRE'}</span>
             {isAboutOpen && (
               <>
                 <div className={styles.dropdownBridge}></div>
                 <div className={styles.dropdownMenu}>
                   <Link href="/sobre" onClick={close}>
-                    {isEn ? 'ABOUT US' : 'SOBRE NÓS'}
+                    {locale === 'en' ? 'ABOUT US' : locale === 'es' ? 'SOBRE NOSOTROS' : 'SOBRE NÓS'}
                   </Link>
                   <Link href="/sobre/historico" onClick={close}>
-                    {isEn ? 'HISTORY' : 'HISTÓRICO'}
+                    {locale === 'en' ? 'HISTORY' : locale === 'es' ? 'HISTÓRICO' : 'HISTÓRICO'}
                   </Link>
                   <Link href="/sobre/clientes" onClick={close}>
-                    {isEn ? 'CLIENTS' : 'CLIENTES'}
+                    {locale === 'en' ? 'CLIENTS' : locale === 'es' ? 'CLIENTES' : 'CLIENTES'}
                   </Link>
                   <Link href="/sobre/certificados" onClick={close}>
-                    {isEn ? 'CERTIFICATES' : 'CERTIFICADOS'}
+                    {locale === 'en' ? 'CERTIFICATES' : locale === 'es' ? 'CERTIFICADOS' : 'CERTIFICADOS'}
                   </Link>
                 </div>
               </>
@@ -71,19 +69,19 @@ export default function Header() {
             onMouseEnter={() => setIsProductsOpen(true)}
             onMouseLeave={() => setIsProductsOpen(false)}
           >
-            <span>{isEn ? 'PRODUCTS' : 'PRODUTOS'}</span>
+            <span>{locale === 'en' ? 'PRODUCTS' : locale === 'es' ? 'PRODUCTOS' : 'PRODUTOS'}</span>
             {isProductsOpen && (
               <>
                 <div className={styles.dropdownBridge}></div>
                 <div className={styles.dropdownMenu}>
                   <Link href="/produtos/transformadores-oleo" onClick={close}>
-                    {isEn ? 'OIL-IMMERSED TRANSFORMERS' : 'TRANSFORMADORES IMERSOS EM ÓLEO'}
+                    {locale === 'en' ? 'OIL-IMMERSED TRANSFORMERS' : locale === 'es' ? 'TRANSFORMADORES INMERSOS EN ACEITE' : 'TRANSFORMADORES IMERSOS EM ÓLEO'}
                   </Link>
                   <Link href="/produtos/transformadores-seco" onClick={close}>
-                    {isEn ? 'DRY-TYPE TRANSFORMERS' : 'TRANSFORMADORES A SECO'}
+                    {locale === 'en' ? 'DRY-TYPE TRANSFORMERS' : locale === 'es' ? 'TRANSFORMADORES TIPO SECO' : 'TRANSFORMADORES A SECO'}
                   </Link>
                   <Link href="/produtos/transformadores-instrumentos" onClick={close}>
-                    {isEn ? 'INSTRUMENT TRANSFORMERS' : 'TRANSFORMADORES PARA INSTRUMENTOS'}
+                    {locale === 'en' ? 'INSTRUMENT TRANSFORMERS' : locale === 'es' ? 'TRANSFORMADORES PARA INSTRUMENTOS' : 'TRANSFORMADORES PARA INSTRUMENTOS'}
                   </Link>
                 </div>
               </>
@@ -91,28 +89,36 @@ export default function Header() {
           </div>
 
           <Link href="/contato" onClick={close}>
-            {isEn ? 'CONTACT' : 'CONTATO'}
+            {locale === 'en' ? 'CONTACT' : locale === 'es' ? 'CONTACTO' : 'CONTATO'}
           </Link>
 
-          <button
-            onClick={toggleLanguage}
-            disabled={isPending}
-            aria-label={isEn ? 'Mudar para Português' : 'Switch to English'}
-            className={styles.langBtn}
-          >
-            {isEn ? 'PT' : 'EN'}
-          </button>
+          <div className={styles.langSwitcher}>
+            {(['pt', 'en', 'es'] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => switchLocale(l)}
+                disabled={isPending || locale === l}
+                className={`${styles.langBtn} ${locale === l ? styles.langBtnActive : ''}`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
         </nav>
 
         <div className={styles.headerRight}>
-          <button
-            onClick={toggleLanguage}
-            disabled={isPending}
-            aria-label={isEn ? 'Mudar para Português' : 'Switch to English'}
-            className={styles.langBtn}
-          >
-            {isEn ? 'PT' : 'EN'}
-          </button>
+          <div className={styles.langSwitcher}>
+            {(['pt', 'en', 'es'] as const).map((l) => (
+              <button
+                key={l}
+                onClick={() => switchLocale(l)}
+                disabled={isPending || locale === l}
+                className={`${styles.langBtn} ${locale === l ? styles.langBtnActive : ''}`}
+              >
+                {l.toUpperCase()}
+              </button>
+            ))}
+          </div>
 
           <button
             className={styles.menuToggle}

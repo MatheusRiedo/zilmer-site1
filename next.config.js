@@ -30,8 +30,6 @@ const nextConfig = {
       {
         source: '/(.*)',
         headers: [
-          // Allow CloudFront to forward the original protocol
-          { key: 'X-Forwarded-Proto', value: 'https' },
           // Security headers
           { key: 'X-Content-Type-Options', value: 'nosniff' },
           { key: 'X-Frame-Options', value: 'SAMEORIGIN' },

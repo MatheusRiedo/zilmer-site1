@@ -21,6 +21,25 @@ const nextConfig = {
   compiler: {
     removeConsole: process.env.NODE_ENV === 'production',
   },
+  // Trust proxy headers forwarded by CloudFront / ALB
+  experimental: {
+    trustHostHeader: true,
+  },
+  async headers() {
+    return [
+      {
+        source: '/(.*)',
+        headers: [
+          // Allow CloudFront to forward the original protocol
+          { key: 'X-Forwarded-Proto', value: 'https' },
+          // Security headers
+          { key: 'X-Content-Type-Options', value: 'nosniff' },
+          { key: 'X-Frame-Options', value: 'SAMEORIGIN' },
+          { key: 'Referrer-Policy', value: 'strict-origin-when-cross-origin' },
+        ],
+      },
+    ]
+  },
 }
 
 module.exports = withNextIntl(nextConfig)

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start",
+    "start": "next start -p 80",
     "export": "next build && next export",
     "download-images": "node scripts/download-images.js",
     "auto-images": "node scripts/auto-download-images.js",
